@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Bank;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use yajra\Datatables\Datatables;
+
+class BankController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $banks = Bank::orderBy('id','desc')->paginate(7);
+        return view('bank.index', ['bank' => $banks]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('bank.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+
+            'name' => 'required',
+            'transaction' => 'required',
+            'amount' => 'required',
+            'account_name' => 'required',
+            'account_no' => 'required',
+            'bank_charge' => 'required',
+            'charge' => 'required',
+            
+
+        ]);
+        $input = $request->all();
+        $bank = Bank::create($input);
+        return redirect()->route('bank.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Bank  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Bank $bank)
+    {
+        return view('bank.show', ['client' => $bank]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Bank  $bank
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Bank $bank)
+    {
+        return view('bank.edit', compact('bank'))->with('success','transactions is edited successfully');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Bank  $bank
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Bank $bank)
+    {
+        $bank->name = $request->name;
+        $bank->phone = $request->phone;
+        $bank->transaction = $request->transaction;
+        $bank->amount = $request->amount;
+        $bank->account_name = $request->account_name;
+        $bank->account_no = $request->account_no;
+        $bank->bank_charge = $request->bank_charge;
+        $bank->charge = $request->charge;
+        $bank->remark = $request->remark;
+        $bank->save();
+        return redirect(route('bank.index'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Bank  $bank
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Bank $bank)
+    {
+        $bank->delete();
+        return redirect(route('bank.index'));
+    }
+}
