@@ -52,7 +52,7 @@
                         <td><span>&#8358;</span>{{ $bank->bank_charge}}</td>
                         <td disabled><span>&#8358;</span>{{$bank->charge - $bank->bank_charge}}</td>
                         <td>{{ $bank->remark}}</td>
-                        <td>{{ $bank->created_at->diffForHumans() . $bank->created_at->format('F d, Y')}}</td>
+                        <!-- <td>{{ $bank->created_at->diffForHumans() . $bank->created_at->format('F d, Y')}}</td> -->
                     </td>
                         <td>
 

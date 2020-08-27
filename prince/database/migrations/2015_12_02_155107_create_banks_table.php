@@ -16,7 +16,7 @@ class CreateBanksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('phone')->nullable();
-            $table->integer('transaction');
+            $table->string('transaction');
             $table->string('amount')->nullable();
             $table->string('account_name', 500);
             $table->string('account_no');
