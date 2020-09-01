@@ -44,8 +44,8 @@
                         <tfoot>
                         <tr>
                         <th  colspan="3">Total</th>
-                        <th><span>&#8358;</span>{{ $item->sum('pay') }}</th>                        
-                        <th colspan="4"><span>&#8358;</span>{{ $item->sum('total') }}</th>                        
+                        <th><span>&#8358;</span>{{ $history->sum('pay') }}</th>                        
+                        <th colspan="4"><span>&#8358;</span>{{ $history->sum('total') }}</th>                        
                     </table>
                     <div>{{ $history->links() }}</div>
                 </div>
