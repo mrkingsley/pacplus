@@ -26,23 +26,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($incomes as $income)
+                        @foreach($incomes as $index=>$income)
                         <tr>
-                        <td>{{ $income->id }}</td>
+                        <td>{{$index+1}}</td>
                         <td>{{ $income->income_title }}</td>
                         <td><span>&#8358;</span>{{ $income->income_amount }}</td>
                         <td>{{ $income->income_date }}</td>
                     </td>
                         <td>
-
-                            <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('incomes.edit',$income->id) }}"><i class="fa fa-pencil"></i> </a> 
-
+                            <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('incomes.edit',$income->id) }}"><i class="fa fa-pencil"></i> </a>
+                            
                                 <form onsubmit="return confirm('are you sure you want to delect this transaction!')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('incomes.delete',$income->id) }}">
                                 @csrf
                                 @method('get')
                                 <button type="submit" class="btn "><i class="fa fa-trash-o"></i></button>
                         </form>
-                         
                         </td>
                         </tr>
                         @endforeach
@@ -75,7 +73,9 @@
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#order_table').DataTable();
+            $('#order_table').DataTable({order: [],
+    scrollX: true,
+    });
         } );
 
     </script>

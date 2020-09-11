@@ -1,72 +1,106 @@
-@extends('layouts.app')
-<!-- © 2020 Copyright: -->
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card" style="min-height: 85vh">
-                <div class="card-header bg-white">
-                    <form action="{{ route('products.index') }}" method="get">
+@extends('layouts.db')
+
+
+@section('main')
+<section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-header box-header-primary">
+                  <div class="row">
+                  <div class="col-xs-12">
+                  </div>
+                  </div>
+                  <form action="{{ route('products.index') }}"  method="get">
                         <div class="row">  
-                            <div class="col"><h4 class="font-weight-bold">Products</h4></div>
-                            <div class="col"><input type="text" name="search"
+                        <div class="box-header with-border">
+                        <h4 class="box-title">Products List</h4></div>
+                            <div class="col-sm-7"><input type="text" name="search"
                                     class="form-control form-control-sm col-sm-10 float-right"
                                     placeholder="Search Product..." onblur="this.form.submit()"></div>
                             <div class="col-sm-2"><a href="{{ url('/products/create')}}"
-                                    class="btn btn-primary btn-sm float-right btn-block">Add Product</a></div>
+                                    class="btn btn-primary btn-sm float-left btn-block">Add Product</a></div>
                         </div>
                     </form>
                 </div>
-                <div class="card-body">
-                    @if(Session::has('success'))
-                    @include('layouts.flash-success',[ 'message'=> Session('success') ])
-                    @endif
-                    <div class="row">
-                        @foreach ($products as $product)
-                        <div class="col-sm-3">
-                            <div class="card mb-3">
-                                <div class="view overlay">
-                                    <img class="card-img-top gambar" src="{{ $product->image }}" alt="Card image cap">
-                                    <a href="#!">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-center font-weight-bold"
-                                        style="text-transform: capitalize;">
-                                        {{ Str::words($product->name,6) }}</h5>
-                                    <p class="card-text text-center"><span>&#8358;</span>{{ number_format($product->price,2,',','.') }}
-                                    </p>
-                                    <a href="{{ route('products.edit', $product->id) }}"
-                                        class="btn btn-primary btn-block btn-sm">Details</a>
-                                </div>
-                            </div>
-                        </div>
+          <div class="box-body">
+                  <div class="table-responsive">
+
+                        <table class="table table-hover table-striped table-bordered " style="font-size:14px" id="order_table" >
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Product Qty</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($products as $index=>$product)
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{$product->name,6 }}</td>
+                                <td><span>&#8358;</span>{{$product->price }}</td>
+                                <td>{{$product->qty }}</td>
+                                <td>{{$product->created_at->diffForHumans()}}</td>
+                                <td>{{$product->description}}</td>
+                    </td>
+                        <td>
+
+                        <a href="{{ route('products.edit', $product->id) }}"
+                                        class="btn btn-primary btn-block btn-sm">Details<i class="fa fa-pencil"></i> </a> 
+
+
+                                <form onsubmit="return confirm('are you sure you want to delect this user')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('products.destroy', $product->id ) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn "><i class="fa fa-trash-o"></i></button>
+                        </form>
+                        </td>
+                        </tr>
                         @endforeach
-                    </div>
-                </div>
-                <div>{{ $products->links() }}</div>
-            </div>
-        </div>
+                        </tbody>
+                    </table>
+                    <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="form-control">
+                <br>
+                <button class="btn btn-success">Import Product Data</button>
+                <a class="btn btn-warning" href="{{ route('export') }}">Export Product Data</a>
+            </form>
+
+                </div><!-- /.box-body -->
+
+
+            </div><!-- /.box -->
+
+
+
+        </div> <!-- /.col -->
     </div>
-    @endsection
+    <!-- /.row -->
 
-    @push('style')
-    <style>
-        .gambar {
-            width: 100%;
-            height: 175px;
-            padding: 0.9rem 0.9rem
-        }
 
-        @media only screen and (max-width: 600px) {
-            .gambar {
-                width: 100%;
-                height: 100%;
-                padding: 0.9rem 0.9rem
-            }
-        }
+</section><!-- /.content -->
 
-    </style>
-    @endpush
-<!-- © 2020 Copyright: Tahu Coding -->
+
+
+@endsection
+
+
+
+@section('page-js')
+    <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+   
+    <script>
+        $(document).ready(function() {
+            $('#order_table').DataTable({order: [],
+    scrollX: true,
+    });
+        } );
+    </script>
+@endsection

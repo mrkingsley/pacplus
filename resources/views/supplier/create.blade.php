@@ -11,7 +11,7 @@
 
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Enter Customer Detail</h3>
+                    <h3 class="box-title">Add Supplier</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
 
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group {{ $errors->has('company')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Products Supplied</label>
+                        <label class="control-label col-sm-3">Products</label>
                         <div class="col-sm-7">
                             <input type="text" name="company" class="form-control" value="{{ old('company') }}" placeholder="supplier products e.g touchpad,  downpanel, ">
                             {!! $errors->has('email')? '<p class="help-block"> '.$errors->first('email').' </p>':'' !!}

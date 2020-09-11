@@ -14,6 +14,14 @@ use yajra\Datatables\Datatables;
 
 class ProductController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:product-create', ['only' => ['create','store']]);
+         $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
+
     public function index(){
        
         $products = Product::when(request('search'), function($query){
@@ -21,7 +29,7 @@ class ProductController extends Controller
                     })
                     ->orderBy('created_at','desc')
                     ->paginate(8);
-        return view('product.index', compact('products'));
+        return view('product.index',compact('products','history'));
     }
 
     public function create(){
@@ -38,6 +46,7 @@ class ProductController extends Controller
             if($id){
                 $this->validate($request, [
                     'name' => 'required|min:2|max:200',
+                    'product_code' => 'required',
                     'price' => 'required',
                     'description' => 'required', 
                 ]);
@@ -57,7 +66,7 @@ class ProductController extends Controller
                     $new_gambar = time().$gambar->getClientOriginalName();
                     Image::make($gambar->getRealPath())->resize(null, 200, function ($constraint) {
                         $constraint->aspectRatio();
-                    })->save(public_path('uploads/images/' . $new_gambar));
+                    })->save();
 
                     File::delete(public_path($product_id->image));
                     
@@ -97,25 +106,25 @@ class ProductController extends Controller
                     'name' => 'required|min:2|max:200',
                     'price' => 'required',
                     'qty' => 'required',
-                    'image' => 'mimes:jpeg,jpg,png,gif|required|max:25000',
+                    // 'image' => 'mimes:jpeg,jpg,png,gif|required|max:25000',
                     'description' => 'required', 
                 ]);
 
-                $gambar = $request->image;
-                $new_gambar = time().$gambar->getClientOriginalName();
+                // $gambar = $request->image;
+                // $new_gambar = time().$gambar->getClientOriginalName();
 
                 $product = Product::create([
                         'name' => $request->name,
                         'price' => $request->price,     
                         'qty' => $request->qty,          
-                        'image' => 'uploads/images/'.$new_gambar,
+                        // 'image' => 'uploads/images/'.$new_gambar,
                         'description' => $request->description,
                         'user_id' => Auth::id()
                 ]);        
 
-                Image::make($gambar->getRealPath())->resize(null, 200, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save(public_path('uploads/images/' . $new_gambar));
+                // Image::make($gambar->getRealPath())->resize(null, 200, function ($constraint) {
+                //     $constraint->aspectRatio();
+                // })->save(public_path('uploads/images/' . $new_gambar));
 
                 HistoryProduct::create([
                     'product_id' => $product->id,

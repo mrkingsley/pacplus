@@ -12,6 +12,23 @@
               </a>
             </li>
 
+            
+            <li class="treeview {{ Request::is('administrator/products*')? 'active' :''  }}">
+              <a href="#">
+                <i class="fa fa-sellsy"></i>
+                <span>management</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+              @can('users-list')
+                <li class=""><a href="{{ route('users.index') }}"><i class="fa fa-shopping-cart"></i>Users</a></li>
+                @endcan
+                @can('role-list')
+                <li class="{{ Request::is('administrator/banks/create')? 'active' :''  }}"><a href="{{ route('roles.index') }}"><i class="fa fa-plus-square"></i> Roles </a></li>
+                @endcan
+              </ul>
+            </li>
+
             <li class="treeview {{ Request::is('administrator/products*')? 'active' :''  }}">
               <a href="#">
                 <i class="fa fa-sellsy"></i>
@@ -19,8 +36,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class=""><a href="{{url('transcation')}}"><i class="fa fa-shopping-cart"></i>Sale Cart</a></li>
-                <li class="{{ Request::is('administrator/banks/create')? 'active' :''  }}"><a href="{{url('/transcation/history')}}"><i class="fa fa-plus-square"></i> Sales Details </a></li>
+              @can('transaction-list')
+                <li class=""><a href="{{url('transcation')}}"><i class="fa fa-shopping-cart"></i>Sale </a></li>
+                <li class="{{ Request::is('administrator/banks/create')? 'active' :''  }}"><a href="{{url('/transcation/history')}}"><i class="fa fa-plus-square"></i>View Sales</a></li>
+                @endcan
               </ul>
             </li>
 
@@ -31,10 +50,16 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{route('products.index')}}"><i class="fa fa-dropbox"></i> Products Gallery</a></li>
+              @can('product-list')
+                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{route('products.index')}}"><i class="fa fa-dropbox"></i>View Products</a></li>
+                @endcan
+              </ul>
+              <ul class="treeview-menu">
+              @can('product-create')
+                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ url('/products/create')}}"><i class="fa fa-dropbox"></i>Add Products</a></li>
+                @endcan
               </ul>
             </li>
-
             
             <li class="treeview {{ Request::is('administrator/customers*')? 'active' :''  }}">
               <a href="#">
@@ -43,8 +68,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+              @can('client-list')
                 <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ route('client.index') }}"><i class="fa fa-bars"></i> Customers </a></li>
-                <li class="{{ Request::is('administrator/clients/create')? 'active' :''  }}"><a href="{{ route('client.create') }}"><i class="fa fa-plus-circle"></i> Add Customers</a></li>
+                @endcan
+                @can('client-create')
+                <li class="{{ Request::is('administrator/clients/create')? 'active' :''  }}"><a href="{{ route('client.create') }}"><i class="fa fa-plus-circle"></i> Add Customers</a></li> 
+                @endcan
               </ul>
             </li>
 
@@ -55,8 +84,11 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+              @can('supplier-list')
                 <li class="{{ Request::is('administrator/suppliers')? 'active' :''  }}"><a href="{{ route('supplier.index') }}"><i class="fa fa-bars"></i> Suppliers </a></li>
-                <li class="{{ Request::is('administrator/suppliers/create')? 'active' :''  }}"><a href="{{ route('supplier.create') }}"><i class="fa fa-plus-circle"></i> Add Suppliers</a></li>
+                @endcan
+                @can('supplier-create')
+                <li class="{{ Request::is('administrator/suppliers/create')? 'active' :''  }}"><a href="{{ route('supplier.create') }}"><i class="fa fa-plus-circle"></i> Add Suppliers</a></li>@endcan
               </ul>
             </li>
 
@@ -68,11 +100,14 @@
                       <i class="fa fa-angle-left pull-right"></i>
                   </a>
                   <ul class="treeview-menu">
+                  @can('workshop-list')
                       <li class="{{ Request::is('admin/repair-product')? 'active' :''  }}">
                           <a href="{{ route('workshop.index') }}"><i class="fa fa-list-alt"></i>Payment Details </a>
                       </li>
-
+                      @endcan
+                      @can('workshop-create')
                       <li class="{{ Request::is('admin/repair-product/create')? 'active' :''  }}"><a href="{{ route('workshop.create') }}"><i class="fa fa-plus-square-o"></i>Add new </a></li>
+                      @endcan
                   </ul>
               </li>
 
@@ -84,17 +119,13 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+              @can('bank-list')
                 <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ route('bank.index') }}"> <i class="fa fa-dropbox"></i></i>Transactions</a></li>
+                @endcan
+                @can('bank-create')
                 <li class="{{ Request::is('administrator/customers/create')? 'active' :''  }}"><a href="{{ route('bank.create') }}"><i class="fa fa-plus-circle"></i> Add Transactions</a></li>
+                @endcan
               </ul>
-            </li>
-
-           <li class="treeview-menu">
-              <a href="">
-                <i class="fa fa-users"></i>
-                <span>Staffs</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
             </li>
 
             <li class="treeview {{ Request::is('administrator/products*')? 'active' :''  }}">
@@ -104,21 +135,27 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+              @can('incomes-list')
                 <li class="nav-item {{ Route::currentRouteName() == 'incomes.index' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('incomes.index') }}">
                     <i class="fa fa-dropbox"></i>
                     <span>Incomes</span></a>
                 </li>
+                @endcan
+                @can('expense-list')
                 <li class="nav-item {{ Route::currentRouteName() == 'expense.index' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('expense.index') }}">
                     <i class="fa fa-plus-square"></i>
                     <span>Expenses</span></a>
                 </li>
+                @endcan
+                @can('summary-list')
                 <li class="nav-item {{ Route::currentRouteName() == 'summary' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('expenses.summary') }}">
                     <i class="fa fa-sellsy"></i>
                     <span>All Summary</span></a>
                 </li>
+                @endcan
               </ul>
             </li>
 
@@ -126,19 +163,14 @@
             <li class="treeview {{ Request::is('administrator/products*')? 'active' :''  }}">
               <a href="#">
                 <i class="fa fa-user"></i>
-                <span>Account</span>
+                <span>Rest password</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li class="nav-item {{ Route::currentRouteName() == 'incomes.index' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('user.index') }}">
+                    <a class="nav-link" href="{{url('change-password')}}">
                     <i class="fa fa-bars"></i>
-                    <span>Users</span></a>
-                </li>
-                <li class="nav-item {{ Route::currentRouteName() == 'expense.index' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('user.create') }}">
-                    <i class="fa fa-plus-circle"></i>
-                    <span>Add User</span></a>
+                    <span>Change Password</span></a>
                 </li>
               </ul>
             </li>

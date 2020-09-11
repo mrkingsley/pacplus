@@ -17,7 +17,7 @@ class CreateClientTable extends Migration
             $table->increments('id');
             $table->string('customer_name');
             $table->text('remark')->nullable();
-            $table->integer('phone');
+            $table->string('phone');
             $table->timestamps();
         });
     }

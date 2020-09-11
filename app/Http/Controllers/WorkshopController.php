@@ -10,6 +10,14 @@ use yajra\Datatables\Datatables;
 
 class WorkshopController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:workshop-list|workshop-create|workshop-edit|workshop-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:workshop-create', ['only' => ['create','store']]);
+         $this->middleware('permission:workshop-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:workshop-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +50,9 @@ class WorkshopController extends Controller
         $this->validate($request, [
 
             'name' => 'required',
-            'hardware' => 'required',
-            'software' => 'required',
-            'remark' => 'required'
+            'hardware' => '',
+            'software' => '',
+            'remark' => ''
 
         ]);
         $input = $request->all();

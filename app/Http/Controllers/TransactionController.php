@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
+use \PDF;
 use Carbon\Carbon;
 use App\HistoryProduct;
 use App\ProductTranscation;
@@ -19,6 +20,14 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class TransactionController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:transaction-list|transaction-create|transaction-edit|transaction-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:transaction-create', ['only' => ['create','store']]);
+         $this->middleware('permission:transaction-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:transaction-delete', ['only' => ['destroy']]);
+    }
+
     public function index(){    
              
         //product
@@ -26,7 +35,7 @@ class TransactionController extends Controller
                         return $query->where('name','like','%'.request('search').'%');
                     })
                     ->orderBy('created_at','desc')
-                    ->paginate(12);
+                    ->paginate(10);
 
 
         //cart item
@@ -222,7 +231,7 @@ class TransactionController extends Controller
         $cek_itemId = $cart->whereIn('id', $id); 
 
         if($product->qty == $cek_itemId[$id]->quantity){
-            return redirect()->back()->with('error','jumlah item kurang');
+            return redirect()->back()->with('error','please contact admin');
         }else{
             \Cart::session(Auth()->id())->update($id, array(
             'quantity' => array(
@@ -246,4 +255,4 @@ class TransactionController extends Controller
 
     
 }
-//© 2020 Copyright: Tahu Coding
+

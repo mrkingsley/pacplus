@@ -10,7 +10,21 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {  
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('roles','RoleController');
+    Route::resource('users','UserController');
     Route::resource('/products','ProductController');
+
+    //pdf
+    Route::get('generate-pdf','PDFController@generatePDF');
+
+    //excel
+    Route::get('importExportView', 'ExcelController@importExportView');
+    Route::get('export', 'ExcelController@export')->name('export');
+    Route::post('import', 'ExcelController@import')->name('import');
+
+    //change password
+    Route::get('change-password', 'ChangePasswordController@index');
+    Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
     
     Route::get('/transcation', 'TransactionController@index');
     Route::post('/transcation/addproduct/{id}', 'TransactionController@addProductCart');
@@ -22,7 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/transcation/history','TransactionController@history');
     Route::get('/transcation/laporan/{id}','TransactionController@laporan');
      //User
-     Route::resource('user', 'userController');
+     
     // Workshop
     Route::resource('workshop','WorkshopController');
 
@@ -96,3 +110,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');

@@ -26,35 +26,63 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="cursor: pointer"
+                                            onclick="this.closest('form').submit();return false;">
                     <div class="row">
                         @foreach ($products as $product)
-                        <div style="width: 150px;border:1px solid rgb(243, 243, 243)" class="mb-4">
-                            <div class="productCard">
+                       <div class="col-sm-3">
+                            <div class="card mb-3">
                                 <div class="view overlay">
-                                    <form action="{{url('/transcation/addproduct', $product->id)}}" method="POST">
-                                        @csrf
-                                        @if($product->qty == 0)
-                                        <img class="card-img-top gambar" src="{{ $product->image }}"
-                                            alt="Card image cap">
-                                        <button class="btn btn-primary btn-sm cart-btn disabled"><i
-                                                class="fas fa-cart-plus"></i></button>
-                                        @else
-                                        <img class="card-img-top gambar" src="{{ $product->image }}"
-                                            alt="Card image cap" style="cursor: pointer"
-                                            onclick="this.closest('form').submit();return false;">
-                                        <button type="submit" class="btn btn-primary btn-sm cart-btn"><i
-                                                class="fas fa-cart-plus"></i></button>
-                                        @endif
-                                    </form>
+                                   
                                 </div>
+                                <form action="{{url('/transcation/addproduct', $product->id)}}" method="POST">
+                                @csrf
+                                 @if($product->qty == 0)
                                 <div class="card-body">
-                                    <label class="card-text text-center font-weight-bold"
-                                        style="text-transform: capitalize;">
-                                        {{ Str::words($product->name,4) }} ({{$product->qty}}) </label>
-                                    <p class="card-text text-center"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
+                                    <h2 class="card-text text-center font-weight-bold"
+                                        style="text-transform: capitalize;"> <a href="{{ route('products.edit', $product->id) }}" style="color:black">
+                                        {{ Str::words($product->name,4) }}</a> </h2>
+                                        <p class="card-text text-center">Qty: ({{$product->qty}})</p>
+                                    <p class="card-text text-center text-success"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
                                     </p>
+                                    <button 
+                                        class="btn btn-danger btn-block btn-sm">out of stock <i
+                                                class="fas fa-cart-plus"></i></button>
+                                               
                                 </div>
+
+                                @elseif($product->qty == 6)
+                                <div class="card-body">
+                                    <h2 class="card-text text-center font-weight-bold"
+                                        style="text-transform: capitalize;color:black"> 
+                                        {{ Str::words($product->name,4) }}</h2>
+                                        <p class="card-text text-center">Qty: ({{$product->qty}})</p>
+                                    <p class="card-text text-center text-success"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
+                                    </p>
+                              
+                                     <button 
+                                        class="btn btn-success btn-block btn-sm">(runing out of stock)Add to Sell <i
+                                                class="fas fa-cart-plus"></i></button>
+                               
+                                
+                              </div>     
+                              @else
+                                <div class="card-body">
+                                    <h2 class="card-text text-center font-weight-bold"
+                                        style="text-transform: capitalize;color:black">
+                                        {{ Str::words($product->name,4) }} </h2>
+                                        <p class="card-text text-center">Qty: ({{$product->qty}})</p>
+                                    <p class="card-text text-center text-success"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
+                                    </p>
+                              
+                                     <button 
+                                        class="btn btn-primary btn-block btn-sm">Add to Sell <i
+                                                class="fas fa-cart-plus"></i></button>
+                               
+                                
+                              </div>         
+                                @endif
+                                </form>
                             </div>
                         </div>
                         @endforeach
@@ -63,12 +91,13 @@
                 <div>{{ $products->links() }}</div>
             </div>
         </div>
+        
         <div class="col-sm-4">
             <div class="card" style="min-height:85vh">
                 <div class="card-header bg-white">
                     <div class="row">
                         <div class="col-sm-4">
-                            <h4 class="font-weight-bold">Cart</h4>
+                            <h4 class="font-weight-bold">Sells list</h4>
                         </div>
                         <div class="col-sm-8">
                             <select name="" id="" class="form-control from-control-sm" style="font-size: 13px">
@@ -85,7 +114,7 @@
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
-                                    <th width="30%">Nama Product</th>
+                                    <th width="30%">Product</th>
                                     <th width="30%">Qty</th>
                                     <th width="30%" class="text-right">Sub Total</th>
                                 </tr>
@@ -157,24 +186,28 @@
                                 {{ number_format($data_total['total'],2,',','.') }}</th>
                         </tr>
                     </table>
-                    <div class="row">
+                    <div class="row" >
+                    <div class="col-sm-4">
+                            <button class="btn btn-success btn-sm btn-block" style="padding:2px!important"
+                                data-toggle="modal" data-target="#fullHeightModalRight">Submit Sell</button>
+                        </div>
+
+
+
                         <div class="col-sm-4">
                             <form action="{{ url('/transcation/clear') }}" method="POST">
                                 @csrf
-                                <button class="btn btn-danger btn-lg btn-block" style="padding:2px!important"
+                                <button class="btn btn-danger btn-sm btn-block" style="padding:2px!important"
                                     onclick="return confirm('are you sure you want to clear cart ?');"
-                                    type="submit">Clear</button>
+                                    type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i>Clear List</button>
                             </form>
                         </div>
+
                         <div class="col-sm-4">
-                            <a class="btn btn-primary btn-lg btn-block"
+                            <a class="btn btn-primary btn-sm btn-block"
                                 style="padding:2px!important" href="{{url('/transcation/history')}}" target="_blank">History</a>
-                            <!-- Kembangkan sendiri ya bagian ini, logikanya kita simpan cartnya sementara dalam databse ntar kalau butuh keluarin lagi-->
                         </div>
-                        <div class="col-sm-4">
-                            <button class="btn btn-success btn-lg btn-block" style="padding:2px!important"
-                                data-toggle="modal" data-target="#fullHeightModalRight">Pay</button>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -184,10 +217,9 @@
     <div class="modal fade right" id="fullHeightModalRight" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
 
-        <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
         <div class="modal-dialog modal-full-height modal-right" role="document">
 
-        <!-- Sorry campur2 bahasa indonesia sama inggris krn kebiasaan make b.inggris eh ternyata buat aplikasi buat indonesia jadi gini deh  -->
+
             <div class="modal-content">
                 <div class="modal-header indigo">
                     <h6 class="modal-title w-100 text-light" id="myModalLabel">payment Information</h6>
@@ -236,14 +268,13 @@
         </div>
     </div>
     @endsection
-    <!-- © 2020 Copyright: Tahu Coding -->
-    <!-- Ini error harusnya bisa dinamis ambil value dari controller tp agar cepet ya biar aja gini silahkan modifikasi  -->
+    
     @push('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @if(Session::has('error'))
     <script>
         toastr.error(
-            'Telah mencapai jumlah maximum Product | Silahkan tambah stock Product terlebih dahulu untuk menambahkan'
+            'sorry you are out of stock| no products to sell, inform your boss'
         )
 
     </script>
@@ -252,7 +283,7 @@
     @if(Session::has('errorTransaksi'))
     <script>
         toastr.error(
-            'Transaksi tidak valid | perhatikan jumlah pembayaran | cek jumlah product'
+            'transaction error'
         )
 
     </script>

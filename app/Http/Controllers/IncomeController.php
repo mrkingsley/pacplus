@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class IncomeController extends Controller
 {
-    public function __construct()
+    
+    function __construct()
     {
-        $this->middleware('auth');
+         $this->middleware('permission:incomes-list|incomes-create|incomes-edit|incomes-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:incomes-create', ['only' => ['create','store']]);
+         $this->middleware('permission:incomes-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:incomes-delete', ['only' => ['destroy']]);
     }
+
     public function index()
     {
         $data['incomes'] = Income::where('user_id', Auth::user()->id)->latest()->paginate(12);

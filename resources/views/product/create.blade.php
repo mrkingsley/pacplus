@@ -1,8 +1,7 @@
 @extends('layouts.db')
-<!-- © 2020 Copyright: Tahu Coding -->
+
 @section('main')
-<div class="content">
-    <!-- Info boxes -->
+<div class="content"> 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
 
@@ -29,21 +28,7 @@
                                     <input type="number" class="form-control" name="price" value="{{ old('price') }}">
                                     @include('layouts.error', ['name' => 'price'])
                                 </div>
-                                <div class="form-group">
-                                    <label>Display product img sample</label>
-                                    <div>
-                                        <div class="custom-file">
-                                            <br>
-                                            <input name="image" id="image" type="file" class="custom-file-input"
-                                                accept="image/*"
-                                                onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"><label
-                                                class="custom-file-label">Choose File</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12"><img id="output" src="" class="img-fluid"></div>
-                                    @include('layouts.error', ['name' => 'image'])
-                                </div>
-                            
+                                
                             
                                 <div class="form-group">
                                     <label for="qty">Qty</label>
@@ -67,4 +52,3 @@
     </div>
 </div>
 @endsection
-<!-- © 2020 Copyright: Tahu Coding -->

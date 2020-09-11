@@ -8,16 +8,8 @@
 
             <div class="box">
                 <div class="box-header with-border">
+                <h4 class="box-title">Edit And View Product history</h4>
                     <div class="box-body">  
-                    <form action="{{ route('products.destroy', $product->id ) }}" method="POST">
-                        <label class="font-weight-bold">
-                            <h4 class="font-weight-bold">Products</h4>
-                        </label>
-                        @method('delete')
-                        @csrf
-                        <button class="btn btn-danger btn-sm float-right"
-                            onclick="return confirm('do you really want to delete this product ?');">Delete Product</button>
-                    </form>
                 </div>
                 <div class="box-body">
                     @if(Session::has('error'))
@@ -42,23 +34,7 @@
                                         value="{{ old('price' , $product->price) }}">
                                     @include('layouts.error', ['name' => 'price'])
                                 </div>
-                                <div class="form-group">
-                                    <label>Display product img sample</label>
-                                    <div>
-                                        <div class="custom-file">
-                                            <br>
-                                            <input name="image" id="image" type="file" class="custom-file-input"
-                                                accept="image/*"
-                                                onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0]); document.getElementById('preview').style.display = 'none'"><label
-                                                class="custom-file-label">Choose File</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12"><img id="output" src="" class="img-fluid"></div>
-                                    @if($product->image)
-                                    <img src="{{asset($product->image)}}" class="img-fluid" id="preview">
-                                    @endif
-                                    @include('layouts.error', ['name' => 'image'])
-                                </div>
+                               
                            
                            
                                 <div class="form-group">
@@ -89,7 +65,7 @@
                         </div>
                     </form>
                     <H4>Detailed Information Of This Product</H4>
-                    <table class="table" id="dtMaterialDesignExample">
+                    <table class="table table-hover table-striped table-bordered " style="font-size:14px" id="order_table" >
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -122,6 +98,19 @@
         
     </div>
 </div>
+@endsection
+
+@section('page-js')
+    <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+   
+    <script>
+        $(document).ready(function() {
+            $('#order_table').DataTable({order: [],
+    scrollX: true,
+    });
+        } );
+    </script>
 @endsection
 
 

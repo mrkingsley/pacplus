@@ -23,7 +23,7 @@
                         <table class="table table-hover table-striped table-bordered " style="font-size:14px" id="order_table" >
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Supplier Name</th>
                             <th>Phone No:</th>
                             <th>Email</th>
@@ -34,9 +34,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                    @foreach($supplier as $supplier)
+                    @foreach($supplier as $index=>$supplier)
                         <tr>
-                        <td>{{ $supplier->id }}</td>
+                        <td>{{$index+1}}</td>
                         <td>{{ $supplier->supplier_name }}</td>
                         <td>{{ $supplier->phone}}</td>
                         <td>{{ $supplier->email}}</td>
@@ -83,10 +83,12 @@
 @section('page-js')
     <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+   
     <script>
         $(document).ready(function() {
-    $('#order_table').DataTable();
-} );
-
+            $('#order_table').DataTable({order: [],
+    scrollX: true,
+    });
+        } );
     </script>
 @endsection

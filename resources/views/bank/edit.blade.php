@@ -42,9 +42,8 @@
                     <div class="form-group {{ $errors->has('transaction')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Transaction Type</label>
                              <div class="col-sm-7">  
-                                    <select class="form-control show-tick" name="transaction" id="type">
-                                        <option value="">Select Transaction Type. e.g 
-                                        'Top-up" </option>
+                                    <select class="form-control show-tick" value="{{ old('phone')?  old('phone') : $bank->phone }}"name="transaction" id="type">
+                                        <option value=""> </option>
                                         <option value="withdraw">Withdraw</option>
                                         <option value="deposit">Deposit</option>
                                         <option value="transfer">Transfer </option>

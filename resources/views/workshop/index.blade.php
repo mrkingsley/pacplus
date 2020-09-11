@@ -23,7 +23,7 @@
                         <table class="table table-hover table-striped datatable table-bordered" style="font-size:14px" id="order_table" >
                     <thead>
                         <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Name</th>
                         <th>Hardware Dpt Account</th>
                         <th>Software Dpt Account</th>
@@ -33,9 +33,9 @@
                          </tr>
                     </thead>
                     <tbody>
-                    @foreach($workshop as $workshop)
+                    @foreach($workshop as $index=>$workshop)
                         <tr>
-                        <td>{{ $workshop->id }}</td>
+                        <td>{{$index+1}}</td>
                         <td>{{ $workshop->name }}</td>
                         <td><span>&#8358;</span>{{ number_format($workshop->hardware,2,',','.')}}</td>
                         <td><span>&#8358;</span>{{ number_format($workshop->software,2,',','.') }}</td>
@@ -90,7 +90,9 @@
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-    $('#order_table').DataTable();
+    $('#order_table').DataTable({order: [],
+    scrollX: true,
+    });
 } );
 
     </script>

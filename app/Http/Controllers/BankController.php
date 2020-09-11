@@ -12,6 +12,13 @@ use yajra\Datatables\Datatables;
 
 class BankController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:bank-list|bank-create|bank-edit|bank-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:bank-create', ['only' => ['create','store']]);
+         $this->middleware('permission:bank-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:bank-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

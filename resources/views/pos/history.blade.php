@@ -18,18 +18,29 @@
 
                         <table class="table table-hover table-striped table-bordered" id="order_table" >
                         <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Invoices Id</th>
-                            <th>Sales By</th>
-                            <th>Paid In</th>
-                            <th>Total Amount</th>
-                            <th>Time</th>
-                            <th>Sales Report</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($history as $index=>$item)
+                            <tr>
+                                <th>No</th>
+                                <th>Invoices No</th>
+                                <th>Sales By</th>
+                                <th>Paid In</th>
+                                <th>Total Amount</th>
+                                <th>Time</th>
+                                <th>View Report</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                            @foreach ($history as $index=>$item)
+                                <th>Total:</th>
+                                <th></th>
+                                <th></th>
+                                <th><span>&#8358;</span>{{ $item->sum('pay') }}</th>
+                                <th><span>&#8358;</span>{{ $item->sum('total') }}</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td>{{$item->invoices_number}}</td>
@@ -39,13 +50,8 @@
                                 <td>{{ $item->created_at->diffForHumans() . $item->created_at->format('F d, Y')}}</td>
                             <td><a href="{{url('/transcation/laporan', $item->invoices_number )}}" class="btn btn-primary btn-sm"><i class="fas fa-print"></i></a></td>
                             </tr>
-                        @endforeach
                         </tbody>
-                        <tfoot>
-                        <tr>
-                        <th  colspan="3">Total</th>
-                        <th><span>&#8358;</span>{{ $history->sum('pay') }}</th>                        
-                        <th colspan="4"><span>&#8358;</span>{{ $history->sum('total') }}</th>                        
+                        @endforeach                       
                     </table>
                     <div>{{ $history->links() }}</div>
                 </div>
@@ -65,7 +71,9 @@
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-    $('#order_table').DataTable();
+    $('#order_table').DataTable({order: [],
+    scrollX: true,
+    });
 } );
 
     </script>

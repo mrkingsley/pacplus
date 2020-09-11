@@ -9,6 +9,13 @@ use Carbon\Carbon;
 
 class ExpenseReportController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:summary-list|summary-create|summary-edit|summary-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:summary-create', ['only' => ['create','store']]);
+         $this->middleware('permission:summary-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:summary-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $from = Carbon::parse(sprintf(
