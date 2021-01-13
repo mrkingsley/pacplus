@@ -15,7 +15,17 @@
                   <div class="col-xs-12">
                   </div>
                   </div>
-                  <h3 class="box-title">Suppliers</h3>
+                  <form action="{{ route('supplier.index') }}"  method="get">
+                    <div class="row">
+                    <div class="box-header with-border">
+                    <h4 class="box-title"> Supplier List</h4></div>
+                        <div class="col-sm-7"><input type="text" name="search"
+                                class="form-control form-control-sm col-sm-10 float-right"
+                                placeholder="Global Search..." onblur="this.form.submit()"></div>
+                        <div class="col-sm-2"><a href="{{ url('/supplier/create')}}"
+                                class="btn btn-primary btn-sm float-left btn-block">Add</a></div>
+                    </div>
+                </form>
                 </div>
           <div class="box-body">
                   <div class="table-responsive">
@@ -26,10 +36,7 @@
                             <th>No</th>
                             <th>Supplier Name</th>
                             <th>Phone No:</th>
-                            <th>Email</th>
-                            <th>Products</th>
-                            <th>Remark</th>
-                            <th>Time</th>
+                            <th>Deals On</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -39,14 +46,9 @@
                         <td>{{$index+1}}</td>
                         <td>{{ $supplier->supplier_name }}</td>
                         <td>{{ $supplier->phone}}</td>
-                        <td>{{ $supplier->email}}</td>
                         <td>{{ $supplier->company}}</td>
-                        <td>{{ $supplier->remark}}</td>
-                        <td>{{ $supplier->created_at->diffForHumans() . $supplier->created_at->format('F d, Y')}}</td>
-                    </td>
                         <td>
-
-                            <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('supplier.edit',$supplier->id) }}"><i class="fa fa-pencil"></i> </a> 
+                            <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('supplier.edit',$supplier->id) }}"><i class="fa fa-pencil"></i> </a>
 
 
                                 <form onsubmit="return confirm('are you sure you want to delect this user')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('supplier.destroy', $supplier->id)}}">
@@ -83,7 +85,7 @@
 @section('page-js')
     <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-   
+
     <script>
         $(document).ready(function() {
             $('#order_table').DataTable({order: [],

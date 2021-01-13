@@ -40,19 +40,19 @@
                             {!! $errors->has('phone')? '<p class="help-block"> '.$errors->first('phone').' </p>':'' !!}
                         </div>
                     </div>
-                   
+
 
                     <div class="form-group {{ $errors->has('company')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Remark</label>
                         <div class="col-sm-7">
-                            <textarea type="text" name="remark" class="form-control" value="{{ old('remark')  ? old('remark') : $client->remark}}" placeholder="enter your description......"></textarea>
+                            <input type="text" name="remark" class="form-control" value="{{ old('remark')  ? old('remark') : $client->remark}}" placeholder=" Customer Address">
                             {!! $errors->has('remark')? '<p class="help-block"> '.$errors->first('remark').' </p>':'' !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-7 col-sm-offset-3">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square-o"></i> Submit</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square-o"></i> Update</button>
                         </div>
                     </div>
 

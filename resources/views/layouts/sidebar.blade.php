@@ -12,16 +12,16 @@
               </a>
             </li>
 
-            
+
             <li class="treeview {{ Request::is('administrator/products*')? 'active' :''  }}">
               <a href="#">
-                <i class="fa fa-sellsy"></i>
+                <i class="fa fa-plus-square"></i>
                 <span>management</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
               @can('users-list')
-                <li class=""><a href="{{ route('users.index') }}"><i class="fa fa-shopping-cart"></i>Users</a></li>
+                <li class=""><a href="{{ route('users.index') }}"><i class="fa fa-shopping-cart"></i>Staff</a></li>
                 @endcan
                 @can('role-list')
                 <li class="{{ Request::is('administrator/banks/create')? 'active' :''  }}"><a href="{{ route('roles.index') }}"><i class="fa fa-plus-square"></i> Roles </a></li>
@@ -46,21 +46,21 @@
             <li class="treeview {{ Request::is('administrator/customers*')? 'active' :''  }}">
               <a href="#">
                 <i class="fa fa-shopping-cart"></i>
-                <span>Products</span>
+                <span>Stocks</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
               @can('product-list')
-                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{route('products.index')}}"><i class="fa fa-dropbox"></i>View Products</a></li>
+                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{route('products.index')}}"><i class="fa fa-dropbox"></i>View Stocks</a></li>
                 @endcan
               </ul>
               <ul class="treeview-menu">
               @can('product-create')
-                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ url('/products/create')}}"><i class="fa fa-dropbox"></i>Add Products</a></li>
+                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ url('/products/create')}}"><i class="fa fa-dropbox"></i>Add Stocks</a></li>
                 @endcan
               </ul>
             </li>
-            
+
             <li class="treeview {{ Request::is('administrator/customers*')? 'active' :''  }}">
               <a href="#">
                 <i class="fa fa-dropbox"></i>
@@ -72,7 +72,7 @@
                 <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ route('client.index') }}"><i class="fa fa-bars"></i> Customers </a></li>
                 @endcan
                 @can('client-create')
-                <li class="{{ Request::is('administrator/clients/create')? 'active' :''  }}"><a href="{{ route('client.create') }}"><i class="fa fa-plus-circle"></i> Add Customers</a></li> 
+                <li class="{{ Request::is('administrator/clients/create')? 'active' :''  }}"><a href="{{ route('client.create') }}"><i class="fa fa-plus-circle"></i> Add Customers</a></li>
                 @endcan
               </ul>
             </li>
@@ -91,22 +91,39 @@
                 <li class="{{ Request::is('administrator/suppliers/create')? 'active' :''  }}"><a href="{{ route('supplier.create') }}"><i class="fa fa-plus-circle"></i> Add Suppliers</a></li>@endcan
               </ul>
             </li>
+            <li class="treeview {{ Request::is('administrator/suppliers*')? 'active' :''  }}">
+              <a href="#">
+                <i class="fa fa-folder-o"></i>
+                <span>Order</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+              @can('supplier-list')
+                <li class="{{ Request::is('administrator/suppliers')? 'active' :''  }}"><a href="{{ route('order.index') }}"><i class="fa fa-bars"></i> view orders</a></li>
+                @endcan
+              {{-- @can('supplier-list')
+                <li class="{{ Request::is('administrator/suppliers')? 'active' :''  }}"><a href="{{ route('order.show') }}"><i class="fa fa-bars"></i> orders</a></li>
+                @endcan --}}
+                @can('supplier-create')
+                <li class="{{ Request::is('administrator/suppliers/create')? 'active' :''  }}"><a href="{{ route('order.create') }}"><i class="fa fa-plus-circle"></i>Place Order</a></li>@endcan
+              </ul>
+            </li>
 
 
             <li class="treeview {{ Request::is('admin/repair-product*')? 'active' :''  }}">
                   <a href="#">
                       <i class="fa fa-wrench"></i>
-                      <span>workshop</span>
+                      <span>Purchases</span>
                       <i class="fa fa-angle-left pull-right"></i>
                   </a>
                   <ul class="treeview-menu">
                   @can('workshop-list')
                       <li class="{{ Request::is('admin/repair-product')? 'active' :''  }}">
-                          <a href="{{ route('workshop.index') }}"><i class="fa fa-list-alt"></i>Payment Details </a>
+                          <a href="{{ route('purchase.index') }}"><i class="fa fa-list-alt"></i> View Purchases</a>
                       </li>
                       @endcan
                       @can('workshop-create')
-                      <li class="{{ Request::is('admin/repair-product/create')? 'active' :''  }}"><a href="{{ route('workshop.create') }}"><i class="fa fa-plus-square-o"></i>Add new </a></li>
+                      <li class="{{ Request::is('admin/repair-product/create')? 'active' :''  }}"><a href="{{ route('purchase.create') }}"><i class="fa fa-plus-square-o"></i>Add Purchases</a></li>
                       @endcan
                   </ul>
               </li>
@@ -115,7 +132,7 @@
             <li class="treeview {{ Request::is('administrator/customers*')? 'active' :''  }}">
               <a href="#">
               <i class="fa fa-bars"></i>
-                <span>Banking(Pos)</span>
+                <span>P.o.s</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
@@ -126,6 +143,56 @@
                 <li class="{{ Request::is('administrator/customers/create')? 'active' :''  }}"><a href="{{ route('bank.create') }}"><i class="fa fa-plus-circle"></i> Add Transactions</a></li>
                 @endcan
               </ul>
+            </li>
+
+
+            <li class="treeview {{ Request::is('administrator/customers*')? 'active' :''  }}">
+              <a href="#">
+              <i class="fa fa-bars"></i>
+                <span>Payments</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+              @can('payment-list')
+                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ route('payment.index') }}"> <i class="fa fa-dropbox"></i></i>View payments</a></li>
+                @endcan
+                @can('payment-create')
+                <li class="{{ Request::is('administrator/customers/create')? 'active' :''  }}"><a href="{{ route('payment.create') }}"><i class="fa fa-plus-circle"></i> Add payments</a></li>
+                @endcan
+              </ul>
+            </li>
+
+
+            <li class="treeview {{ Request::is('administrator/customers*')? 'active' :''  }}">
+              <a href="#">
+              <i class="fa fa-bars"></i>
+                <span>Outstanding</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+              @can('outstanding-list')
+                <li class="{{ Request::is('administrator/customers')? 'active' :''  }}"><a href="{{ route('outstanding.index') }}"> <i class="fa fa-dropbox"></i></i>View outstanding</a></li>
+                @endcan
+                @can('outstanding-create')
+                <li class="{{ Request::is('administrator/customers/create')? 'active' :''  }}"><a href="{{ route('outstanding.create') }}"><i class="fa fa-plus-circle"></i> Add Outstanding</a></li>
+                @endcan
+              </ul>
+            </li><li class="treeview {{ Request::is('admin/repair-product*')? 'active' :''  }}">
+                <a href="#">
+                    <i class="fa fa-wrench"></i>
+                    <span>workshop</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                @can('workshop-list')
+                    <li class="{{ Request::is('admin/repair-product')? 'active' :''  }}">
+                        <a href="{{ route('workshop.index') }}"><i class="fa fa-list-alt"></i>Payment Details </a>
+                    </li>
+                    @endcan
+                    @can('workshop-create')
+                    <li class="{{ Request::is('admin/repair-product/create')? 'active' :''  }}"><a href="{{ route('workshop.create') }}"><i class="fa fa-plus-square-o"></i>Add new </a></li>
+                    @endcan
+                </ul>
             </li>
 
             <li class="treeview {{ Request::is('administrator/products*')? 'active' :''  }}">

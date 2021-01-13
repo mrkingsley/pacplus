@@ -23,20 +23,36 @@ class ProductController extends Controller
     }
 
     public function index(){
-       
         $products = Product::when(request('search'), function($query){
                         return $query->where('name','like','%'.request('search').'%');
                     })
                     ->orderBy('created_at','desc')
                     ->paginate(8);
-        return view('product.index',compact('products','history'));
+        return view('product.index',compact('products'));
+    }
+    public function dataAjax(Request $request)
+    {
+    	$data = [];
+
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data = DB::table("products")
+            		->select("id", "name","model")
+            		->where('name','LIKE',"%$search%")
+            		->where('model','LIKE',"%$search%")
+            		->get();
+        }
+
+
+        return response()->json($data);
     }
 
     public function create(){
         return view('product.create');
     }
 
-    public function store(Request $request){       
+    public function store(Request $request){
 
         DB::beginTransaction();
 
@@ -46,9 +62,10 @@ class ProductController extends Controller
             if($id){
                 $this->validate($request, [
                     'name' => 'required|min:2|max:200',
-                    'product_code' => 'required',
+                    'model' => 'required',
                     'price' => 'required',
-                    'description' => 'required', 
+                    'sales_price' => 'required',
+
                 ]);
 
                 if($request->addQty){
@@ -69,21 +86,24 @@ class ProductController extends Controller
                     })->save();
 
                     File::delete(public_path($product_id->image));
-                    
+
                     $product = [
                         'name' => $request->name,
-                        'price' => $request->price,     
-                        'qty' => $qty,          
+                        'model' => $request->model,
+                        'sales_price' => $request->sales_price,
+                        'price' => $request->price,
+                        'qty' => $qty,
                         'image' => 'uploads/images/'.$new_gambar,
-                        'description' => $request->description,
                     ];
                 }
                 else{
                     $product = [
                         'name' => $request->name,
-                        'price' => $request->price,     
-                        'qty' => $qty,                         
-                        'description' => $request->description,
+                        'model' => $request->model,
+                        'category' => $request->category,
+                        'price' => $request->price,
+                        'sales_price' => $request->sales_price,
+                        'qty' => $qty,
                     ];
                 }
                 $product_id->update($product);
@@ -96,18 +116,20 @@ class ProductController extends Controller
                         'tipe' => 'change product qty from admin'
                     ]);
                 }
-                
+
                 $message = 'Data Berhasil di update';
 
                 DB::commit();
-                return redirect()->back()->with('success',$message);   
+                return redirect()->route('products.index')->with('success',$message);
             }else{
                 $this->validate($request, [
                     'name' => 'required|min:2|max:200',
-                    'price' => 'required',
-                    'qty' => 'required',
+                    'price' => '',
+                    'qty' => '',
+                    'name' => 'required|min:2|max:200',
+                    'model' => 'required',
+                    'sales_price' => '',
                     // 'image' => 'mimes:jpeg,jpg,png,gif|required|max:25000',
-                    'description' => 'required', 
                 ]);
 
                 // $gambar = $request->image;
@@ -115,12 +137,14 @@ class ProductController extends Controller
 
                 $product = Product::create([
                         'name' => $request->name,
-                        'price' => $request->price,     
-                        'qty' => $request->qty,          
+                        'model' => $request->model,
+                        'category' => $request->category,
+                        'price' => $request->price,
+                        'sales_price' => $request->sales_price,
+                        'qty' => $request->qty,
                         // 'image' => 'uploads/images/'.$new_gambar,
-                        'description' => $request->description,
                         'user_id' => Auth::id()
-                ]);        
+                ]);
 
                 // Image::make($gambar->getRealPath())->resize(null, 200, function ($constraint) {
                 //     $constraint->aspectRatio();
@@ -137,17 +161,17 @@ class ProductController extends Controller
                 $message = 'Data successfully saved';
 
                 DB::commit();
-                return redirect()->route('products.index')->with('success',$message);   
-            }            
+                return redirect()->route('products.index')->with('success',$message);
+            }
         }
         catch(\Exeception $e){
             DB::rollback();
             return redirect()->route('products.create')->with('error',$e);
-        }         
+        }
     }
 
     public function edit($id){
-        
+
         $product = Product::find($id);
         $history = HistoryProduct::where('product_id',$id)->orderBy('created_at','desc')->get();
         return view('product.edit',compact('product','history'));
@@ -159,17 +183,17 @@ class ProductController extends Controller
         try{
         $product = Product::find($id);
         $product->delete();
-        File::delete(public_path($product->image));       
+        File::delete(public_path($product->image));
 
         DB::commit();
-        return redirect()->route('products.index')->with('success','Product deleted successfully');                             
+        return redirect()->route('products.index')->with('success','Product deleted successfully');
         }
         catch(\Exeception $e){
-            DB::rollback();      
-            return redirect()->route('products.index')->with('error',$e);      
-        }  
+            DB::rollback();
+            return redirect()->route('products.index')->with('error',$e);
+        }
 
-        
+
     }
 
 }

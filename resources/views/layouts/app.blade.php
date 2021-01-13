@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" href="images/icons/favicon1.gif"/>
+    <link rel="icon" type="image/png" href="images/icons/avatar-02.jpg"/>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css">
-     
+
 <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
 
     <!-- Font Awesome -->
@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
@@ -37,12 +37,12 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark primary-color">
+        <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #811;">
             <div class="container-fluid">
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                    <a class="nav-link font-weight-bolder" href="{{ url('home') }}">dashboard                          
+                    <a class="nav-link font-weight-bolder" href="{{ url('home') }}">dashboard
                         </a>
                     </li>
                 </ul>
@@ -75,14 +75,14 @@
             @yield('content')
         </main>
 
-        
+
     </div>
 
-    
+
 </body>
     <!-- Footer -->
-    <footer class="main-footer"  style="background: #4285f4 ;padding:15px;color: #fff;;border-top: 1px solid #d2d6de;text-align: center;">
-    
+    <footer class="main-footer"  style="background: #811; ;padding:15px;color: #fff;;border-top: 1px solid #d2d6de;text-align: center;">
+
     <strong> &copy; {{ date('Y') }} </strong>
     </footer>
         <!-- Footer -->

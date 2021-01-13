@@ -35,14 +35,13 @@
                             {!! $errors->has('phone')? '<p class="help-block"> '.$errors->first('phone').' </p>':'' !!}
                         </div>
                     </div>
-                    
+
 
                     <div class="form-group {{ $errors->has('transaction')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Transaction Type</label>
-                             <div class="col-sm-7">  
+                             <div class="col-sm-7">
                                     <select class="form-control show-tick" name="transaction" id="type">
-                                        <option value="">Select Transaction Type. e.g 
-                                        'Top-up" </option>
+                                        <option value="" disabled selected>Select Transaction Type</option>
                                         <option value="withdraw">Withdraw</option>
                                         <option value="deposit">Deposit</option>
                                         <option value="transfer">Transfer </option>
@@ -53,7 +52,19 @@
                                     </select> {!! $errors->has('transaction')? '<p class="help-block"> '.$errors->first('transaction').' </p>':'' !!}
                                 </div>
                             </div>
-                            
+
+                    <div class="form-group {{ $errors->has('machine')? 'has-error' : '' }}">
+                        <label class="control-label col-sm-3">Machine</label>
+                             <div class="col-sm-7">
+                                    <select class="form-control show-tick" name="machine" id="type">
+                                        <option value="" disabled selected>Select machine</option>
+                                        <option value="POS1">POS1</option>
+                                        <option value="POS2">POS2</option>
+                                        <option value="POS3">POS3</option>
+                                    </select> {!! $errors->has('machine')? '<p class="help-block"> '.$errors->first('machine').' </p>':'' !!}
+                                </div>
+                            </div>
+
 
                     <div class="form-group {{ $errors->has('amount')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Amount</label>

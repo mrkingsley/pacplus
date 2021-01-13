@@ -10,7 +10,17 @@
                   <div class="col-xs-12">
                   </div>
                   </div>
-                  <h3 class="box-title"><a href="{{ route('incomes.create') }}" >Enter New Income</a></h3></h3>
+                  <form action="{{ route('incomes.index') }}"  method="get">
+                    <div class="row">
+                    <div class="box-header with-border">
+                    <h4 class="box-title"> Income List</h4></div>
+                        <div class="col-sm-7"><input type="text" name="search"
+                                class="form-control form-control-sm col-sm-10 float-right"
+                                placeholder="Search Transaction..." onblur="this.form.submit()"></div>
+                        <div class="col-sm-2"><a href="{{ url('/incomes/create')}}"
+                                class="btn btn-primary btn-sm float-left btn-block">Add New Income</a></div>
+                    </div>
+                </form>
                 </div>
           <div class="box-body">
                   <div class="table-responsive">
@@ -35,7 +45,7 @@
                     </td>
                         <td>
                             <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('incomes.edit',$income->id) }}"><i class="fa fa-pencil"></i> </a>
-                            
+
                                 <form onsubmit="return confirm('are you sure you want to delect this transaction!')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('incomes.delete',$income->id) }}">
                                 @csrf
                                 @method('get')
@@ -50,6 +60,13 @@
                         <th  colspan="2">Total</th>
                         <th class="text-success"><span>&#8358;</span>{{ $incomes->sum('income_amount') }}</th>
                     </table>
+                    <form action="/income/import" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="file" class="form-control">
+                        <br>
+                        <button class="btn btn-success">Import  Data</button>
+
+                    </form>
 
                 </div><!-- /.box-body -->
 

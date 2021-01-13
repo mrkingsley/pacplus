@@ -20,5 +20,9 @@ class Transcation extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function purchases()
+    {
+        return $this->belongsTo(Purchase::class, 'purchases_id');
+    }
 
 }

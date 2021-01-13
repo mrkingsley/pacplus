@@ -52,12 +52,20 @@ class PermissionTableSeeder extends Seeder
            'incomes-edit',
            'incomes-delete',
            'summary-list',
+           'outstanding-list',
+           'outstanding-create',
+           'outstanding-edit',
+           'outstanding-delete',
+           'payment-list',
+           'payment-create',
+           'payment-edit',
+           'payment-delete',
            'users-list',
            'users-create',
            'users-edit',
            'users-delete',
         ];
-   
+
         foreach ($permissions as $permission) {
              Permission::create(['name' => $permission]);
         }

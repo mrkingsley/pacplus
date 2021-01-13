@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class IncomeController extends Controller
 {
-    
+
     function __construct()
     {
          $this->middleware('permission:incomes-list|incomes-create|incomes-edit|incomes-delete', ['only' => ['index','show']]);
@@ -19,7 +19,12 @@ class IncomeController extends Controller
 
     public function index()
     {
-        $data['incomes'] = Income::where('user_id', Auth::user()->id)->latest()->paginate(12);
+        $data['incomes'] = Income::when(request('search'), function($query){
+            return $query->where('income_title','like','%'.request('search').'%')
+            ->orwhere('income_date','like','%'.request('search').'%')
+            ->orwhere('created_at','like','%'.request('search').'%');
+        })
+        ->orderBy('created_at','desc')->paginate(100);
 
         return view('incomes.index', $data);
     }

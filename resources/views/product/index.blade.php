@@ -12,14 +12,14 @@
                   </div>
                   </div>
                   <form action="{{ route('products.index') }}"  method="get">
-                        <div class="row">  
+                        <div class="row">
                         <div class="box-header with-border">
-                        <h4 class="box-title">Products List</h4></div>
+                        <h4 class="box-title">Stocks List</h4></div>
                             <div class="col-sm-7"><input type="text" name="search"
                                     class="form-control form-control-sm col-sm-10 float-right"
                                     placeholder="Search Product..." onblur="this.form.submit()"></div>
                             <div class="col-sm-2"><a href="{{ url('/products/create')}}"
-                                    class="btn btn-primary btn-sm float-left btn-block">Add Product</a></div>
+                                    class="btn btn-primary btn-sm float-left btn-block" style="background-color: #811">Add Stocks</a></div>
                         </div>
                     </form>
                 </div>
@@ -30,11 +30,13 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Product Qty</th>
+                                <th>Product Name</th>
+                                <th>Model</th>
+                                <th>Category</th>
+                                <th>Unite Price</th>
+                                <th>purchase code</th>
+                                <th>Qty</th>
                                 <th>Time</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,15 +45,17 @@
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td>{{$product->name,6 }}</td>
-                                <td><span>&#8358;</span>{{$product->price }}</td>
+                                <td>{{$product->model }}</td>
+                                <td>{{$product->category }}</td>
+                                <td><span>&#8358;</span>{{$product->price}}</td>
+                                <td>{{$product->sales_price }}</td>
                                 <td>{{$product->qty }}</td>
-                                <td>{{$product->created_at->diffForHumans()}}</td>
-                                <td>{{$product->description}}</td>
+                                <td>{{$product->created_at->format('F d, Y')}}</td>
                     </td>
                         <td>
 
                         <a href="{{ route('products.edit', $product->id) }}"
-                                        class="btn btn-primary btn-block btn-sm">Details<i class="fa fa-pencil"></i> </a> 
+                                        class="btn btn-primary btn-block btn-sm" style="background-color: #811">Details<i class="fa fa-pencil"></i> </a>
 
 
                                 <form onsubmit="return confirm('are you sure you want to delect this user')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('products.destroy', $product->id ) }}">
@@ -64,11 +68,11 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                    <form action="/product/import" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" class="form-control">
                 <br>
-                <button class="btn btn-success">Import Product Data</button>
+                <button class="btn btn-success">Import  Data</button>
                 <a class="btn btn-warning" href="{{ route('export') }}">Export Product Data</a>
             </form>
 
@@ -95,7 +99,7 @@
 @section('page-js')
     <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-   
+
     <script>
         $(document).ready(function() {
             $('#order_table').DataTable({order: [],

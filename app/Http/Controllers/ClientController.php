@@ -27,7 +27,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::orderBy('id','desc')->paginate(7);
+        $clients = Client::when(request('search'), function($query){
+            return $query->where('name','like','%'.request('search').'%')
+            ->orwhere('created_at','like','%'.request('search').'%');
+        })
+        ->orderBy('created_at','desc')->paginate(100);
         return view('client.index', ['client' => $clients]);
     }
 

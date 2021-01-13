@@ -35,27 +35,12 @@
                             {!! $errors->has('phone')? '<p class="help-block"> '.$errors->first('phone').' </p>':'' !!}
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('email')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Email</label>
-
-                        <div class="col-sm-7">
-                            <input type="text" name="email" class="form-control" value="{{ old('email') }}" placeholder="email address e.g: suppler@gmail.com">
-                            {!! $errors->has('email')? '<p class="help-block"> '.$errors->first('email').' </p>':'' !!}
-                        </div>
-                    </div>
 
                     <div class="form-group {{ $errors->has('company')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Products</label>
+                        <label class="control-label col-sm-3">Deals On</label>
                         <div class="col-sm-7">
                             <input type="text" name="company" class="form-control" value="{{ old('company') }}" placeholder="supplier products e.g touchpad,  downpanel, ">
                             {!! $errors->has('email')? '<p class="help-block"> '.$errors->first('email').' </p>':'' !!}
-                        </div>
-                    </div>
-                    <div class="form-group {{ $errors->has('company')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Remark</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" name="remark" class="form-control" value="{{ old('remark') }}" placeholder="remark"></textarea>
-                            {!! $errors->has('remark')? '<p class="help-block"> '.$errors->first('remark').' </p>':'' !!}
                         </div>
                     </div>
 

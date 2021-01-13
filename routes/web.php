@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,7 +9,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {  
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
@@ -18,6 +19,21 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('generate-pdf','PDFController@generatePDF');
 
     //excel
+    Route::get('/product/import', 'ProductImportController@show');
+    Route::post('/product/import', 'ProductImportController@store');
+    Route::post('/product/import', 'ProductImportController@store');
+    Route::get('/purchase/import', 'PurchaseImportController@show');
+    Route::post('/purchase/import', 'PurchaseImportController@store');
+    Route::get('/order/import', 'OrderImportController@show');
+    Route::post('/order/import', 'OrderImportController@store');
+    Route::get('/income/import', 'IncomeImportController@show');
+    Route::post('/income/import', 'IncomeImportController@store');
+    Route::get('/workshop/import', 'WorkshopImportController@show');
+    Route::post('/workshop/import', 'WorkshopImportController@store');
+
+Route::get('export', 'MyController@export')->name('export');
+
+Route::post('import', 'MyController@import')->name('import');
     Route::get('importExportView', 'ExcelController@importExportView');
     Route::get('export', 'ExcelController@export')->name('export');
     Route::post('import', 'ExcelController@import')->name('import');
@@ -25,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
     //change password
     Route::get('change-password', 'ChangePasswordController@index');
     Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
-    
+
     Route::get('/transcation', 'TransactionController@index');
     Route::post('/transcation/addproduct/{id}', 'TransactionController@addProductCart');
     Route::post('/transcation/removeproduct/{id}', 'TransactionController@removeProductCart');
@@ -35,8 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/transcation/bayar','TransactionController@bayar');
     Route::get('/transcation/history','TransactionController@history');
     Route::get('/transcation/laporan/{id}','TransactionController@laporan');
+    //salereport
+    Route::get('/transcation/salereport','TransactionController@salereport');
      //User
-     
+
     // Workshop
     Route::resource('workshop','WorkshopController');
 
@@ -44,20 +62,36 @@ Route::group(['middleware' => ['auth']], function () {
     // Bank
     Route::resource('bank','BankController');
 
+    // Purchases
+    Route::resource('purchase','PurchaseController');
+
+    // orders
+    Route::resource('order','OrderController');
+
+    // Payments
+    Route::resource('payment','PaymentController');
+
+    // Outstanding
+    Route::resource('outstanding','OutstandingController');
+
     // Client
     Route::resource('client','ClientController');
-    
+
     // Supplier
     Route::resource('supplier','SupplierController');
 
      // Transactions
     Route::delete('transactions/destroy', 'TransactionsController@massDestroy')->name('transactions.massDestroy');
     Route::resource('transactions', 'TransactionsController');
-    
+
     Route::delete('expense-categories/destroy', 'ExpenseCategoryController@massDestroy')->name('expense-categories.massDestroy');
     Route::resource('expense-categories', 'ExpenseCategoryController');
 
-   
+
+    //pdf generate new
+    Route::get('/laporan/mypdf','TransactionController@createPDF');
+
+
     //Income Route
     Route::get('/incomes', 'IncomeController@index')->name('incomes.index');
     Route::get('/incomes/create', 'IncomeController@create')->name('incomes.create');
@@ -74,37 +108,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/expense/update', 'ExpenseController@update')->name('expenses.update');
     Route::get('/expense/delete/{id}', 'ExpenseController@destroy')->name('expenses.delete');
 
+
+    //ajax
+    Route::get('order.create','NewOrderController@prodfunct');
+    Route::get('/findProductCode','OrderController@findProductCode');
+
     // Expense/Income summaries
     Route::get('expense/summaries', 'ExpenseController@summary')->name('expenses.summary');
+    // Route::get('order/show', 'OrderController@show')->name('order.show');
 
-    
-    Route::group(['prefix' => 'banks'], function() {
-        Route::get('/', ['as' => 'all_banks', 'uses' => 'BankController@index']);
-        Route::get('all/data', ['as' => 'all_banks_data', 'uses' => 'BankController@indexData']);
-        Route::get('create', ['as' => 'create_banks', 'uses' => 'BankController@create']);
-        Route::post('create', 'BankController@store');
-        Route::get('{id}/edit', ['as' => 'edit_bank', 'uses' => 'BankController@edit']);
-        Route::post('{id}/edit', 'BankController@update');
-        Route::post('delete', ['as' => 'delete_banks', 'uses' => 'BankController@destroy']);
-    });
-
-    Route::group(['prefix' => 'repair-product'], function() {
-        Route::get('/', ['as' => 'all_repair_product', 'uses' => 'RepairProductController@index']);
-        Route::get('repair-product-data', ['as' => 'repair_product_data', 'uses' => 'RepairProductController@repairInvoiceData']);
-
-        Route::get('completed', ['as' => 'completed_repair_product', 'uses' => 'RepairProductController@completedRepairProduct']);
-        Route::get('completed-repair-product-data', ['as' => 'completed_repair_product_data', 'uses' => 'RepairProductController@completedRepairInvoiceData']);
-
-        Route::get('{id}/view-invoice', ['as' => 'view_repair_invoice', 'uses' => 'RepairProductController@show']);
-        Route::get('{id}/view-invoice/print', ['as' => 'print_repair_invoice', 'uses' => 'RepairProductController@invoicePrint']);
-        Route::get('{id}/view-invoice/pdf', ['as' => 'pdf_repair_invoice', 'uses' => 'RepairProductController@invoicePDF']);
-        Route::get('create', ['as' => 'new_repair_product', 'uses' => 'RepairProductController@create']);
-        Route::post('create', 'RepairProductController@store');
-        Route::post('change-invoice-status', ['as' => 'change_repair_invoice_status', 'uses' => 'RepairProductController@changeRepairInvoiceStatus']);
-        Route::post('save-engineer-note-in-item', ['as' => 'save_engineer_note_in_item', 'uses' => 'RepairProductController@saveEngineerNoteInItem']);
-    });
-
-
+    // Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
+Route::get('select2-autocomplete-ajax', 'ProductController@dataAjax');
 });
 
 

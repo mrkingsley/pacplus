@@ -14,12 +14,13 @@ class CreateBanksTable extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('phone')->nullable();
-            $table->string('transaction');
+            $table->string('transaction')->nullable();
             $table->string('amount')->nullable();
-            $table->string('account_name', 500);
-            $table->string('account_no');
+            $table->string('account_name')->nullable();
+            $table->string('account_no')->nullable();
+            $table->string('machine')->nullable();
             $table->integer('bank_charge');
             $table->integer('charge');
             $table->text('remark')->nullable();

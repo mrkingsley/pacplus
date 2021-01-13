@@ -6,14 +6,23 @@
     <title>Prince Ajah Communication</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    
-    <link rel="icon" type="image/png" href="images/icons/favicon1.gif"/><!-- Bootstrap 3.3.5 -->
+
+    <link rel="icon" type="image/png" href="images/icons/avatar-02.jpg"/><!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset('assets/admin/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     {{--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">--}}
     <!-- jvectormap -->
+
+    {{-- // select box search --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
+    <script href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{-- // end of select box search --}}
+
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}">
     <link href="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -23,13 +32,13 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('assets/admin/dist/css/skins/_all-skins.min.css') }}">
-<!-- Scripts -->
+        <!-- Scripts -->
         <script src="{{ asset('js/jquery.min.js') }}"></script>
 		<script src="{{ asset('js/popper.min.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('js/theme/custom.min.js') }}"></script>
-        
-        
+
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     @yield('page-css')
@@ -49,14 +58,14 @@
     <!-- Logo -->
     <a href="{{ url('home') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>P.</b>A</span>
+      <span class="logo-mini"><b>PAC</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b >Prince </b>Comunication</span>
+      <span class="logo-lg"><b >P.A.C</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" style="background-color: #811">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -163,7 +172,7 @@
                   <small>{{ Auth::user()->email }}</small>
                 </p>
               </li>
-              
+
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -193,8 +202,8 @@
   </header>
 
     @include('layouts.sidebar')
-    
-    
+
+
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -224,5 +233,5 @@
 
 @include('admin.footer')
 
-  
+
 

@@ -26,7 +26,7 @@
                         <label class="control-label col-sm-3">Name</label>
 
                         <div class="col-sm-7">
-                            <input type="text" name="customer_name" class="form-control" value="{{ old('customer_name') }}" placeholder="customer_name">
+                            <input type="text" name="customer_name" class="form-control" value="{{ old('customer_name') }}" placeholder="Customer Name">
                             {!! $errors->has('customer_name')? '<p class="help-block"> '.$errors->first(' customer_name').' </p>':'' !!}
                         </div>
                     </div>
@@ -44,10 +44,10 @@
 
 
                     <div class="form-group {{ $errors->has('customer_name')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Remark</label>
+                        <label class="control-label col-sm-3">Address</label>
 
                         <div class="col-sm-7">
-                            <textarea type="text" name="remark" class="form-control" value="{{ old('remark') }}" placeholder="discription"></textarea>
+                            <input type="text" name="remark" class="form-control" value="{{ old('remark') }}" placeholder=" Customer Address">
                             {!! $errors->has('remark')? '<p class="help-block"> '.$errors->first('remark').' </p>':'' !!}
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     </div>
 
                     </form>
-                     
+
 
                 </div><!-- /.box-body -->
 

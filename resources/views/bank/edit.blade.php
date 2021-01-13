@@ -21,7 +21,7 @@
                         @csrf
                         @method('put')
                     <div class="form-group {{ $errors->has('category_name')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Name</label>
+                        <label class="control-label col-sm-3">Name:</label>
 
                         <div class="col-sm-7">
                             <input type="text" name="name" class="form-control" value="{{ old('name')?   old('name') : $bank->name }}" placeholder="name">
@@ -30,20 +30,19 @@
                     </div>
 
                     <div class="form-group {{ $errors->has('phone')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">phone</label>
+                        <label class="control-label col-sm-3">phone:</label>
 
                         <div class="col-sm-7">
                             <input type="text" name="phone" class="form-control" value="{{ old('phone')?  old('phone') : $bank->phone }}" placeholder="enter mobile contact e.g 080122....">
                             {!! $errors->has('phone')? '<p class="help-block"> '.$errors->first('phone').' </p>':'' !!}
                         </div>
                     </div>
-                    
 
                     <div class="form-group {{ $errors->has('transaction')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Transaction Type</label>
-                             <div class="col-sm-7">  
-                                    <select class="form-control show-tick" value="{{ old('phone')?  old('phone') : $bank->phone }}"name="transaction" id="type">
-                                        <option value=""> </option>
+                             <div class="col-sm-7">
+                                    <select class="form-control show-tick" name="transaction" id="type">
+                                        <option value="{{ old('transaction')?  old('transaction') : $bank->transaction }}"disabled selected>{{ old('transaction')?  old('transaction') : $bank->transaction }}</option>
                                         <option value="withdraw">Withdraw</option>
                                         <option value="deposit">Deposit</option>
                                         <option value="transfer">Transfer </option>
@@ -51,22 +50,34 @@
                                         <option value="top-Up">Top-Up</option>
                                         <option value="officet">Office</option>
                                         <option value="others">Others</option>
+                                    </select> {!! $errors->has('transaction')? '<p class="help-block"> '.$errors->first('transaction').' </p>':'' !!}
+                                </div>
+                            </div>
+
+                    <div class="form-group {{ $errors->has('machine')? 'has-error' : '' }}">
+                        <label class="control-label col-sm-3">Machine:</label>
+                             <div class="col-sm-7">
+                                    <select class="form-control show-tick" name="machine" id="type">
+                                        <option value="{{ old('machine')?  old('machine') : $bank->machine }}" disabled selected>{{ old('machine')?  old('machine') : $bank->machine}}</option>
+                                        <option value="POS1">POS1</option>
+                                        <option value="POS2">POS2</option>
+                                        <option value="POS3">POS3</option>
                                     </select>
                                 </div>
                             </div>
-                            
+
 
                     <div class="form-group {{ $errors->has('account_name')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Account Name</label>
+                        <label class="control-label col-sm-3">Account Name:</label>
 
                         <div class="col-sm-7">
-                            <input type="text" name="account_name" class="form-control" value="{{ old('account_name')?  old('account_name') : $bank->account_name }}" placeholder="Enter account name . e.g prince ajah">
+                            <input type="text" name="account_name" class="form-control" value="{{ old('account_name')?  old('account_name') : $bank->account_name }}" placeholder="Enter account name. e.g prince ajah">
                             {!! $errors->has('account_name')? '<p class="help-block"> '.$errors->first('account_name').' </p>':'' !!}
                         </div>
                     </div>
 
                     <div class="form-group {{ $errors->has('amount')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Amount</label>
+                        <label class="control-label col-sm-3">Amount:</label>
 
                         <div class="col-sm-7">
                             <input type="number" name="amount" class="form-control" value="{{ old('amount')?  old('amount') : $bank->amount }}" placeholder="Enter Amount. e.g 500">
@@ -75,7 +86,7 @@
                     </div>
 
                     <div class="form-group {{ $errors->has('account_name')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Account No.</label>
+                        <label class="control-label col-sm-3">Account No:</label>
 
                         <div class="col-sm-7">
                             <input type="text" name="account_no" class="form-control" value="{{ old('account_no')? old('account_no') : $bank->account_no }}" placeholder="Account No. e.g 00234...">
@@ -84,7 +95,7 @@
                     </div>
 
                     <div class="form-group {{ $errors->has('bank_charge')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Bank Chages</label>
+                        <label class="control-label col-sm-3">Bank Chages:</label>
 
                         <div class="col-sm-7">
                             <input type="text" name="bank_charge" class="form-control" value="{{ old('bank_charge')? old('bank_charge') : $bank->bank_charge }}" placeholder="Enter the bank charges">
@@ -93,7 +104,7 @@
                     </div>
 
                     <div class="form-group {{ $errors->has('charge')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Service Chages</label>
+                        <label class="control-label col-sm-3">Service Chages:</label>
 
                         <div class="col-sm-7">
                             <input type="text" name="charge" class="form-control" value="{{ old('charge')? old('charge') : $bank->charge }}" placeholder="Enter your service charge">
@@ -102,7 +113,7 @@
                     </div>
 
                     <div class="form-group {{ $errors->has('remark')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Remark</label>
+                        <label class="control-label col-sm-3">Note:</label>
 
                         <div class="col-sm-7">
                             <textarea type="text" name="remark" class="form-control" value="{{ old('remark')?  old('remark') : $bank->remark }}" placeholder="Please enter any short notification for refrence purpose "></textarea>
@@ -112,7 +123,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-7 col-sm-offset-3">
-                            <button type="submit" name="submit" class="btn btn-primary" required="required"><i class="fa fa-plus-square-o"></i> Submit</button>
+                            <button type="submit" name="submit" class="btn btn-primary" required="required"><i class="fa fa-plus-square-o"></i> Update</button>
                         </div>
                     </div>
 

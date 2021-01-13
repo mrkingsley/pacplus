@@ -41,11 +41,11 @@
                         <td><span>&#8358;</span>{{ number_format($workshop->software,2,',','.') }}</td>
                         <td>{{ $workshop->remark}}</td>
                         <td>{{ $workshop->created_at->diffForHumans() . $workshop->created_at->format('F d, Y')}}</td>
-                       
+
                     </td>
                         <td>
 
-                            <a class="btn" data-toggle="tooltip"data-placement="top"  href="{{ route('workshop.edit',$workshop->id) }}"><i class="fa fa-pencil"></i> </a> 
+                            <a class="btn" data-toggle="tooltip"data-placement="top"  href="{{ route('workshop.edit',$workshop->id) }}"><i class="fa fa-pencil"></i> </a>
 
 
                                 <form onsubmit="return confirm('are you sure you want to delect this user')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('workshop.destroy', $workshop->id)}}">
@@ -53,7 +53,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn"><i class="fa fa-trash-o"></i></button>
                         </form>
-                         
+
                         </td>
                         </tr>
                         @endforeach
@@ -63,7 +63,14 @@
                         <th><span>&#8358;</span>{{ $workshop->sum('hardware') }}</th>
                         <th colspan="3"><span>&#8358;</span>{{  $workshop->sum('software') }}</th>
                     </table>
-                    
+                    <form action="/workshop/import" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="file" class="form-control">
+                        <br>
+                        <button class="btn btn-success">Import  Data</button>
+
+                    </form>
+
                 </div>
 
                 </div><!-- /.box-body -->

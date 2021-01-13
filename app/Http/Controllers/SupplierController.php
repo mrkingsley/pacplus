@@ -28,7 +28,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::orderBy('id','desc')->paginate(7);
+        $suppliers = Supplier::when(request('search'), function($query){
+            return $query->where('supplier_name','like','%'.request('search').'%')
+            ->orwhere('created_at','like','%'.request('search').'%');
+        })
+        ->orderBy('created_at','desc')->paginate(100);
         return view('supplier.index', ['supplier' => $suppliers]);
     }
 
@@ -54,8 +58,8 @@ class SupplierController extends Controller
 
             'supplier_name' => 'required',
             'phone' => 'required',
-            'email' => 'required',
-            
+            'email' => '',
+
 
 
         ]);
@@ -97,9 +101,7 @@ class SupplierController extends Controller
     {
         $supplier->supplier_name = $request->supplier_name;
         $supplier->phone = $request->phone;
-        $supplier->email = $request->email;
         $supplier->company = $request->company;
-        $supplier->remark = $request->remark;
         $supplier->save();
         return redirect(route('supplier.index'));
     }

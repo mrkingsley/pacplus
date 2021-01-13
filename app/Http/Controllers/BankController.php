@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Bank;
+use App\User;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +25,13 @@ class BankController extends Controller
      */
     public function index()
     {
-        $banks = Bank::orderBy('id','desc')->paginate(7);
+        $banks = Bank::when(request('search'), function($query){
+            return $query->where('name','like','%'.request('search').'%')
+            ->orwhere('transaction','like','%'.request('search').'%')
+            ->orwhere('machine','like','%'.request('search').'%')
+            ->orwhere('created_at','like','%'.request('search').'%');
+        })
+        ->orderBy('created_at','desc')->paginate(100);
         return view('bank.index', ['bank' => $banks]);
     }
 
@@ -50,14 +55,15 @@ class BankController extends Controller
     {
         $this->validate($request, [
 
-            'name' => 'required',
+            'name' => '',
             'transaction' => 'required',
             'amount' => 'required',
-            'account_name' => 'required',
-            'account_no' => 'required',
+            'account_name' => '',
+            'account_no' => '',
             'bank_charge' => 'required',
             'charge' => 'required',
-            
+            'machine' => 'required',
+
 
         ]);
         $input = $request->all();
@@ -104,6 +110,7 @@ class BankController extends Controller
         $bank->account_no = $request->account_no;
         $bank->bank_charge = $request->bank_charge;
         $bank->charge = $request->charge;
+        $bank->machine = $request->machine;
         $bank->remark = $request->remark;
         $bank->save();
         return redirect(route('bank.index'));

@@ -1,7 +1,13 @@
-@extends('layouts.db')
-
-
-@section('main')
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aktech Global Communication</title>
+  </head>
+  <body>
+<!-- Site wrapper -->
 <section class="content">
           <div class="row">
             <div class="col-md-12">
@@ -9,7 +15,7 @@
                     <div class="row">
                     <div class="box-header bg-white">
                     <div class="box-header with-border"><h4 class="font-weight-bold">Report Statement</h4></div>
-                    </div>                 
+                    </div>
                 </div>
                 <div class="box-body">
                     <div class="row">
@@ -44,7 +50,7 @@
                                     <td width="38%">Total</td>
                                     <td width="2%">:</td>
                                     <td width="60%">{{$Transcation->total}}</td>
-                                </tr>   
+                                </tr>
                                 <tr>
                                     <td width="38%">Client</td>
                                     <td width="2%">:</td>
@@ -71,10 +77,10 @@
                                             <td>{{$Transcation->qty}}</td>
                                         </tr>
                                     @endforeach
-                                </tbody>                               
+                                </tbody>
                             </table>
                         </div>
-                    </div>                  
+                    </div>
                 </div>
             </div>
             </div>
@@ -83,6 +89,5 @@
 
 </section><!-- /.content -->
 
-
-
-@endsection
+</body>
+</html>

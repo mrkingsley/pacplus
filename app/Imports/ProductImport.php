@@ -1,12 +1,12 @@
 <?php
-   
+
 namespace App\Imports;
 
 use App\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-    
-class ProductImport implements ToModel, WithHeadingRow
+use Illuminate\Support\Facades\Auth;
+
+class ProductImport implements ToModel
 {
     /**
     * @param array $row
@@ -16,10 +16,13 @@ class ProductImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Product([
-            'name'     => $row['name'],
-            'price'    => $row['price'], 
-            'product_code'    => $row['product_code'], 
-            'qty' => $row['qty'],
+            'user_id' => Auth::id(),
+            'name'  => $row[0],
+            'model'   => $row[1],
+            'category'  => $row[2],
+            'price'    => $row[3],
+            'sales_price'  => $row[4],
+            'qty' => $row[5],
         ]);
     }
 }

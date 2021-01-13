@@ -28,6 +28,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Roles</th>
+                        <th>Status</th>
                         <th width="280px">Action</th>
                         </tr>
                         </thead>
@@ -45,8 +46,15 @@
                                 @endif
                                 </td>
                                 <td>
+                                    @if($user->status=='active')
+                                        <span class="success">{{$user->status}}</span>
+                                    @else
+                                        <span class="warning">{{$user->status}}</span>
+                                    @endif
+                                </td>
+                                <td>
                                 @can('users-edit')
-                                
+
                                 <a class="btn btn" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-pencil"></i></a>@endcan
                                 @can('users-delete')
                                     {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
@@ -85,7 +93,7 @@
         $(document).ready(function() {
     $('#order_table').DataTable({order: [],
     scrollX: true,
-   
+
     });
 } );
 

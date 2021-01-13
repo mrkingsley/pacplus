@@ -11,7 +11,17 @@
                   <div class="col-xs-12">
                   </div>
                   </div>
-                  <h3 class="box-title">Detailed Customer Informations</h3>
+                  <form action="{{ route('client.index') }}"  method="get">
+                    <div class="row">
+                    <div class="box-header with-border">
+                    <h4 class="box-title"> Customer List</h4></div>
+                        <div class="col-sm-7"><input type="text" name="search"
+                                class="form-control form-control-sm col-sm-10 float-right"
+                                placeholder="Search Transaction..." onblur="this.form.submit()"></div>
+                        <div class="col-sm-2"><a href="{{ url('/client/create')}}"
+                                class="btn btn-primary btn-sm float-left btn-block">Add</a></div>
+                    </div>
+                </form>
                 </div>
           <div class="box-body">
                   <div class="table-responsive">
@@ -22,8 +32,7 @@
                             <th>No</th>
                             <th>Customer Name</th>
                             <th>Phone</th>
-                            <th>Remark</th>
-                            <th>Time</th>
+                            <th>Address</th>
                             <th width="280px">Action</th>
                         </tr>
                         </thead>
@@ -34,11 +43,10 @@
                         <td>{{ $client->customer_name }}</td>
                         <td>{{ $client->phone}}</td>
                         <td>{{ $client->remark}}</td>
-                        <td>{{ $client->created_at->diffForHumans() . $client->created_at->format('F d, Y')}}</td>
                     </td>
                         <td>
                         @can('client-edit')
-                            <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('client.edit',$client->id) }}"><i class="fa fa-pencil"></i> </a> 
+                            <a class="btn " data-toggle="tooltip"data-placement="top"  href="{{ route('client.edit',$client->id) }}"><i class="fa fa-pencil"></i> </a>
                             @endcan
 
                             @can('client-delete')
@@ -48,7 +56,7 @@
                                 <button type="submit" class="btn "><i class="fa fa-trash-o"></i></button>
                         </form>
                         @endcan
-                         
+
                         </td>
                         </tr>
                         @endforeach
@@ -76,7 +84,7 @@
     <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
-     
+
     <script>
         $(document).ready(function() {
             $('#order_table').DataTable({order: [],
@@ -84,5 +92,5 @@
     });
         } );
     </script>
-    
+
 @endsection

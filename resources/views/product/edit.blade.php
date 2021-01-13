@@ -9,7 +9,7 @@
             <div class="box">
                 <div class="box-header with-border">
                 <h4 class="box-title">Edit And View Product history</h4>
-                    <div class="box-body">  
+                    <div class="box-body">
                 </div>
                 <div class="box-body">
                     @if(Session::has('error'))
@@ -28,15 +28,31 @@
                                 value="{{ old('name', $product->name) }}">
                             @include('layouts.error', ['name' => 'name'])
                         </div>
+                        <div class="form-group">
+                            <label for="model">Model</label>
+                            <input type="text" class="form-control" name="model"
+                                value="{{ old('model', $product->model) }}">
+                            @include('layouts.error', ['name' => 'model'])
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" class="form-control" name="category"
+                                value="{{ old('category', $product->category) }}">
+                            @include('layouts.error', ['name' => 'category'])
+                        </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
                                     <input type="number" class="form-control" name="price"
                                         value="{{ old('price' , $product->price) }}">
                                     @include('layouts.error', ['name' => 'price'])
                                 </div>
-                               
-                           
-                           
+
+                                <div class="form-group">
+                                    <label for="sales_price">Price(Purchase):</label>
+                                    <input type="number" class="form-control" name="sales_price" value="{{ old('sales_price' , $product->sales_price) }}">
+                                    @include('layouts.error', ['name' => 'sales_price'])
+                                </div>
+
                                 <div class="form-group">
                                     <label for="qty">Qty</label>
                                     <input type="number" class="form-control" value="{{ old('qty', $product->qty) }}"
@@ -56,12 +72,12 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" cols="30" rows="10"
+                            <textarea name="description"
                                 class="form-control">{{ old('description', $product->description) }}</textarea>
                             @include('layouts.error', ['name' => 'description'])
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Update Product</button>
+                            <button type="submit" class="btn btn-primary btn-block">Update Stock</button>
                         </div>
                     </form>
                     <H4>Detailed Information Of This Product</H4>
@@ -95,7 +111,7 @@
             </div>
         </div>
     </div>
-        
+
     </div>
 </div>
 @endsection
@@ -103,7 +119,7 @@
 @section('page-js')
     <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-   
+
     <script>
         $(document).ready(function() {
             $('#order_table').DataTable({order: [],
