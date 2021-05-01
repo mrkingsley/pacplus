@@ -94,18 +94,18 @@
             <li class="treeview {{ Request::is('administrator/suppliers*')? 'active' :''  }}">
               <a href="#">
                 <i class="fa fa-folder-o"></i>
-                <span>Order</span>
+                <span>Invoice</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
               @can('supplier-list')
-                <li class="{{ Request::is('administrator/suppliers')? 'active' :''  }}"><a href="{{ route('order.index') }}"><i class="fa fa-bars"></i> view orders</a></li>
+                <li class="{{ Request::is('administrator/suppliers')? 'active' :''  }}"><a href="{{ route('order.index') }}"><i class="fa fa-bars"></i> view Invoice</a></li>
                 @endcan
               {{-- @can('supplier-list')
                 <li class="{{ Request::is('administrator/suppliers')? 'active' :''  }}"><a href="{{ route('order.show') }}"><i class="fa fa-bars"></i> orders</a></li>
                 @endcan --}}
                 @can('supplier-create')
-                <li class="{{ Request::is('administrator/suppliers/create')? 'active' :''  }}"><a href="{{ route('order.create') }}"><i class="fa fa-plus-circle"></i>Place Order</a></li>@endcan
+                <li class="{{ Request::is('administrator/suppliers/create')? 'active' :''  }}"><a href="{{ route('order.create') }}"><i class="fa fa-plus-circle"></i>create Invoice</a></li>@endcan
               </ul>
             </li>
 

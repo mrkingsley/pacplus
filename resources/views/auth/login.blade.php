@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Aktech Global Communication</title>
+	<title>Prince Ajah Communication</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/avatar-02.jpg"/>
+	<link rel="icon" type="image/png" href="images/icons/favicon1.gif"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -34,8 +34,11 @@
 			<div class="wrap-login100 p-t-85 p-b-20">
 				<form method="POST" action="{{ route('login') }}">
 					@csrf
+					<span class="login100-form-title p-b-70 text-dang">
+						Prince Communication
+					</span>
 					<span class="login100-form-avatar">
-						<img src="images/avatar-02.jpg" alt="AVATAR">
+						<img src="images/avatar-02.gif" alt="AVATAR">
 					</span>
 
 
@@ -54,6 +57,28 @@
 							Login
 						</button>
 					</div>
+
+					<ul class="login-more p-t-190">
+						<li class="m-b-8">
+							<span class="txt1">
+								Forgot
+							</span>
+
+							<a href="#" class="txt2">
+								Username / Password?
+							</a>
+						</li>
+
+						<li>
+							<span class="txt1">
+								Don’t have an account?
+							</span>
+
+							<a href="#" class="txt2">
+								Sign up
+							</a>
+						</li>
+					</ul>
 				</form>
 			</div>
 		</div>

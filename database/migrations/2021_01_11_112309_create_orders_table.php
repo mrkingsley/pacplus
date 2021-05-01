@@ -17,12 +17,13 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('product_name');
             $table->string('supplier')->nullable();
-            $table->enum('status',['supply','process'])->default('process')->nullable();
-            $table->string('category');
-            $table->string('qty')->nullable();;
-            $table->string('product_code')->nullable();
-            $table->string('price')->nullable();
-            $table->string('code')->nullable();
+            $table->integer('date')->nullable();
+            $table->integer('income_amount')->nullable();
+            $table->integer('qty')->nullable();
+            $table->integer('product_code')->nullable();
+            $table->integer('price')->nullable();
+            $table->integer('dis')->nullable();
+            $table->integer('amount')->nullable();
             $table->timestamps();
         });
     }

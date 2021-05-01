@@ -19,7 +19,7 @@
                                     class="form-control form-control-sm col-sm-10 float-right"
                                     placeholder="Search Product..." onblur="this.form.submit()"></div>
                             <div class="col-sm-2"><a href="{{ url('/products/create')}}"
-                                    class="btn btn-primary btn-sm float-left btn-block" style="background-color: #811">Add Stocks</a></div>
+                                    class="btn btn-primary btn-sm float-left btn-block">Add Stocks</a></div>
                         </div>
                     </form>
                 </div>
@@ -31,7 +31,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Product Name</th>
-                                <th>Model</th>
                                 <th>Category</th>
                                 <th>Unite Price</th>
                                 <th>purchase code</th>
@@ -45,7 +44,6 @@
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td>{{$product->name,6 }}</td>
-                                <td>{{$product->model }}</td>
                                 <td>{{$product->category }}</td>
                                 <td><span>&#8358;</span>{{$product->price}}</td>
                                 <td>{{$product->sales_price }}</td>
@@ -55,7 +53,7 @@
                         <td>
 
                         <a href="{{ route('products.edit', $product->id) }}"
-                                        class="btn btn-primary btn-block btn-sm" style="background-color: #811">Details<i class="fa fa-pencil"></i> </a>
+                                        class="btn btn-primary btn-block btn-sm">Details<i class="fa fa-pencil"></i> </a>
 
 
                                 <form onsubmit="return confirm('are you sure you want to delect this user')" class="d-inline-block"style="display: inline-block" method="post" action="{{ route('products.destroy', $product->id ) }}">

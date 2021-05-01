@@ -1,4 +1,4 @@
-@extends('layouts.db')
+@extends('layouts.sp')
 
 @section('main')
 
@@ -20,22 +20,25 @@
                 <form class="form-horizontal" action="{{route('purchase.store')}}" enctype="multipart/form-data" method="post">
                         @csrf
                     <div class="form-group {{ $errors->has('supplier_name')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Supplier:</label>
 
-                        <div class="col-sm-7">
-                            <select class="form-control" placeholder="Select Product, " name="supplier_name">
-                            <option value="" disabled selected>Choose Supplier Name</option>
-                                        @foreach($suppliers as $supplier)
-                                            <option value="{{$supplier->supplier_name}}">{{$supplier->supplier_name}}</option>
-                                        @endforeach
-                                    </select>
+
+                        <div class="form-group  {{ $errors->has('supplier_name')? 'has-error' : '' }}">
+                            <label class="control-label col-sm-3">Supplier:</label>
+                            <div class="col-sm-7">
+                            <select class="chosen" style="height: 34px; width: 280px" placeholder="Select Product, " name="supplier_name">
+                                    <option value="" disabled selected>select Supplier</option>
+                                    @foreach($suppliers as $supplier)
+                                    <option value="{{$supplier->supplier_name }}">{{$supplier->supplier_name }}</option>
+                                @endforeach
+                            </select>
                             </div>
                         </div>
+
                     <div class="form-group {{ $errors->has('product')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Product:</label>
 
                         <div class="col-sm-7">
-                            <select class="form-control" placeholder="Select Product, " name="product">
+                            <select class="chosen" placeholder="Select Product, " name="product">
                             <option value="" disabled selected>Choose the Product</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->name}}">{{$product->name}}</option>
@@ -64,17 +67,17 @@
                     <div class="form-group {{ $errors->has('code')? 'has-error' : '' }}">
                         <label class="control-label col-sm-3">Code</label>
                         <div class="col-sm-7">
-                            <input type="text" name="code" class="form-control" value="{{ old('code') }}" placeholder="Sales Code"></input>
+                            <input type="text" name="code" class="form-control" value="{{ old('code') }}" placeholder="Sales Code">
                             {!! $errors->has('code')? '<p class="help-block"> '.$errors->first('code').' </p>':'' !!}
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-7 col-sm-offset-3">
-                            <button type="submit" name="submit" class="btn btn-primary" required="required"><i class="fa fa-plus-square-o"></i> Submit</button>
-                        </div>
+                <div class="form-group">
+                    <div class="col-sm-7 col-sm-offset-3">
+                        <button type="submit"  class="btn btn-primary" required="required"><i class="fa fa-plus-square-o"></i> Add Supplier</button>
                     </div>
-
+                </div>
                     </form>
 
                 </div><!-- /.box-body -->
@@ -88,6 +91,10 @@
     </div>
     </div>
     <!-- /.row -->
+
+    <script type="text/javascript">
+        $(".chosen").chosen();
+  </script>
 
 
 </section><!-- /.content -->

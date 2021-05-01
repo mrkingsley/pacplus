@@ -28,12 +28,7 @@
                                 value="{{ old('name', $product->name) }}">
                             @include('layouts.error', ['name' => 'name'])
                         </div>
-                        <div class="form-group">
-                            <label for="model">Model</label>
-                            <input type="text" class="form-control" name="model"
-                                value="{{ old('model', $product->model) }}">
-                            @include('layouts.error', ['name' => 'model'])
-                        </div>
+
                         <div class="form-group">
                             <label for="category">Category</label>
                             <input type="text" class="form-control" name="category"

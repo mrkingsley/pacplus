@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Product;
-use App\Supplier;
+use App\Client;
+use App\Purchase;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,14 +20,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        $orders = Order::when(request('search'), function($query){
-            return $query->where('supplier_name','like','%'.request('search').'%')
-            ->orwhere('product','like','%'.request('search').'%') ->orwhere('amount','like','%'.request('search').'%')
-            ->orwhere('created_at','like','%'.request('search').'%');
-        })
-        ->orderBy('created_at','desc')->paginate(100);
-        return view('order.index', ['order' => $orders, 'user' => $user]);
+        $order = Order::all();
+        return view('order.index', ['order'=>$order]);
     }
 
     /**
@@ -37,15 +32,15 @@ class OrderController extends Controller
     public function create()
     {
         $products = Product::all();
-        $suppliers = Supplier::all();
-        return view('order.create', ['products'=>$products,'suppliers'=>$suppliers]);
+        $clients = Client::all();
+        return view('order.create', ['products'=>$products,'clients'=>$clients]);
     }
 
     public function findProductCode(Request $request)
     {
-        $data=Product::select('sales_price','id')->where('model',$request->id)->take(100)->get();
+        $data=Purchase::select('sales_price','id')->where('purchase',$request->id)->take(100)->get();
 
-        return response()->json($data);
+        return response()->json ($data);
     }
 
     /**
@@ -56,21 +51,30 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
 
             'product_name' => 'required',
-            'status' => 'required',
+            'date' => 'required',
             'supplier' => 'required',
-            'category' => 'required',
+            'income_amount' => '',
             'qty' => 'required',
-            'price' => '',
-            'product_code' => '',
-            'code' => '',
-            'status' => '',
+            'price' => 'required',
+            'dis' => 'required',
+            'amount' => 'required',
 
         ]);
-        $input = $request->all();
-        $order = Order::create($input);
+        foreach ( $request->product_name as $key => $product_name){
+            $sale = new Order();
+            $sale->product_name = $request->product_name[$key];
+            $sale->date = $request->date[$key];
+            $sale->supplier = $request->supplier[$key];
+            $sale->income_amount = $request->income_amount[$key];
+            $sale->qty = $request->qty[$key];
+            $sale->price = $request->price[$key];
+            $sale->dis = $request->dis[$key];
+            $sale->amount = $request->amount[$key];
+            $sale->save();
+        }
         return redirect()->route('order.index');
     }
 
@@ -80,15 +84,12 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-    //       $id = Auth::user()->id;
-    //         //
-    //         $data['data'] = DB::table('orders')->where('user_id','=', $id)->first();
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('order.show', compact('order'));
 
-    //         return view('order.show',compact('data'));
-
-    // }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -99,10 +100,13 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         $products = Product::all();
-        $suppliers = Supplier::all();
-        return view('order.edit', ['products'=>$products,'suppliers'=>$suppliers], compact('order'));
+        $clients = Client::all();
+        return view('order.edit', ['products'=>$products,'clients'=>$clients], compact('order'));
     }
-
+    public function findPrice(Request $request){
+        $data = DB::table('products')->select('sales_price')->where('id', $request->id)->first();
+        return response()->json($data);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -112,15 +116,29 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $order->product_name = $request->product_name;
-        $order->model = $request->model;
-        $order->category = $request->category;
-        $order->qty = $request->qty;
-        $order->price = $request->price;
-        $order->product_code = $request->product_code;
-        $order->code = $request->code;
+        $request->validate([
+        'product_name' => 'required',
+        'date' => 'required',
+        'supplier' => 'required',
+        'income_amount' => '',
+        'qty' => 'required',
+        'price' => 'required',
+        'dis' => 'required',
+        'amount' => 'required',
+
+    ]);
+    foreach ( $request->product_name as $key => $product_name){
+        $order->product_name = $request->product_name[$key];
+        $order->date = $request->date[$key];
+        $order->supplier = $request->supplier[$key];
+        $order->income_amount = $request->income_amount[$key];
+        $order->qty = $request->qty[$key];
+        $order->price = $request->price[$key];
+        $order->dis = $request->dis[$key];
+        $order->amount = $request->amount[$key];
         $order->save();
-        return redirect(route('order.index'));
+    }
+    return redirect()->route('order.index');
     }
 
     /**
@@ -132,6 +150,7 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
-        return redirect(route('order.index'));
+        return redirect()->back();
+
     }
 }

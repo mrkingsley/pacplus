@@ -27,7 +27,7 @@ class ProductController extends Controller
                         return $query->where('name','like','%'.request('search').'%');
                     })
                     ->orderBy('created_at','desc')
-                    ->paginate(8);
+                    ->paginate(100);
         return view('product.index',compact('products'));
     }
     public function dataAjax(Request $request)
@@ -62,7 +62,7 @@ class ProductController extends Controller
             if($id){
                 $this->validate($request, [
                     'name' => 'required|min:2|max:200',
-                    'model' => 'required',
+                    'model' => '',
                     'price' => 'required',
                     'sales_price' => 'required',
 
@@ -126,8 +126,7 @@ class ProductController extends Controller
                     'name' => 'required|min:2|max:200',
                     'price' => '',
                     'qty' => '',
-                    'name' => 'required|min:2|max:200',
-                    'model' => 'required',
+                    'model' => '',
                     'sales_price' => '',
                     // 'image' => 'mimes:jpeg,jpg,png,gif|required|max:25000',
                 ]);
@@ -137,7 +136,6 @@ class ProductController extends Controller
 
                 $product = Product::create([
                         'name' => $request->name,
-                        'model' => $request->model,
                         'category' => $request->category,
                         'price' => $request->price,
                         'sales_price' => $request->sales_price,

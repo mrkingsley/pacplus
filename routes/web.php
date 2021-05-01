@@ -67,6 +67,8 @@ Route::post('import', 'MyController@import')->name('import');
 
     // orders
     Route::resource('order','OrderController');
+    Route::get('/findPrice', 'OrderController@findPrice')->name('findPrice');
+    Route::resource('invoice', 'InvoiceController');
 
     // Payments
     Route::resource('payment','PaymentController');
@@ -118,10 +120,13 @@ Route::post('import', 'MyController@import')->name('import');
     // Route::get('order/show', 'OrderController@show')->name('order.show');
 
     // Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
-Route::get('select2-autocomplete-ajax', 'ProductController@dataAjax');
+// Route::get('/search', 'NewOrderController@search')->name('search');
+Route::post('/category/getCategory/','OrderController@getCategory')->name('category.getCategory');
 });
 
+Route::get('livesearch','NewOrderController@livesearch');
 
+Route::get('/autocomplete', 'NewOrderController@dataAjax')->name('work');
 
 
 

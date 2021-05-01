@@ -1,4 +1,4 @@
-@extends('layouts.db')
+@extends('layouts.master')
 
 @section('main')
 
@@ -8,83 +8,182 @@
     <!-- Info boxes -->
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Order</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
+                    <h3 class="box-title"><i class="fa fa-edit"></i> Supply Invoice</h3>
+                </div>
+                     <div class="box-body">
 
-
-
-                <form class="form-horizontal" action="{{route('purchase.update', $purchase->id)}}" enctype="multipart/form-data" method="post">
-                    @csrf
-                    @method('put')
-                    <div class="form-group {{ $errors->has('supplier_name')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Supplier:</label>
-
-                        <div class="col-sm-7">
-                            <select class="form-control" placeholder="Select Product, " name="supplier_name">
-                            <option value="{{ old('supplier_name') ? old('supplier_name') : $purchase->supplier_name}}">{{ old('supplier_name') ? old('supplier_name') : $purchase->supplier_name}}</option>
-                                        @foreach($suppliers as $supplier)
-                                            <option value="{{ $supplier->supplier_name}}">{{ old('supplier_name') ? old('supplier_name') : $supplier->supplier_name}}</option>
+                        <form  method="POST" action="{{route('order.update',$order->id)}}">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group">
+                                <div class=" col-md-3">
+                                    <label class="control-label">Customer Name</label>
+                                    <select name="supplier" class="form-control">
+                                        <option name="supplier" value="{{$order->supplier}}">{{$order->supplier}}</option>
+                                        @foreach($clients as $client)
+                                            <option name="supplier" value="{{$client->customer_name}}">{{$client->customer_name}} </option>
                                         @endforeach
                                     </select>
+                                </div>
                             </div>
-                        </div>
-                    <div class="form-group {{ $errors->has('product')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Product:</label>
 
-                        <div class="col-sm-7">
-                            <select class="form-control" placeholder="Select Product, " name="product">
-                            <option value="{{ old('product') ? old('product') : $purchase->product}}">{{ old('product') ? old('product') : $purchase->product}}</option>
-                                        @foreach($products as $product)
-                                            <option value="{{$product->name}}">{{$product->name}}</option>
+                            <div class="form-group">
+                                <div class=" col-md-3">
+                                    <label class="control-label">Date</label>
+                                    <input name="date"  class="form-control datepicker"  value="<?php echo date('Y-m-d')?>" type="date" placeholder="Enter your email">
+                                </div>
+                            </div>
+
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Product code</th>
+                                <th scope="col">salling code</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">sallingcost</th>
+                                <th scope="col"><a class="addRow"><i class="fa fa-plus"></i></a></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><select name="product_name[]" class="form-control productname" >
+                                        <option name="product_name" value="{{$order->id}}{{$order->product_name}}">{{$order->product_name}}</option>
+                                    @foreach($products as $product)
+                                            <option name="$product->product" value="{{$product->id}}{{$product->name}}">{{$product->name}}</option>
                                         @endforeach
-                                    </select>
+                                    </select></td>
+                                <td><input value="{{$order->qty}}" type="text" name="qty[]" class="form-control qty" ></td>
+                                <td><input value="{{$order->price}}" type="text" name="price[]" class="form-control price" ></td>
+                                <td><input value="{{$order->dis}}" type="text" name="dis[]" class="form-control dis" ></td>
+                                <td><input value="{{$order->amount}}" type="text" name="amount[]" class="form-control amount" ></td>
+                                </td>
+                                <td><input value="{{$order->income_amount}}" type="text" step="any" min="0.01" id="income_amount" class="form-control income_amount" required="required" name="income_amount[]">
+                                <td><a   class="btn btn-danger remove"> <i class="fa fa-remove"></i></a></td>
+                             </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b>Total</b></td>
+                                <td><b class="total"></b></td>
+                                <td></td>
+                            </tr>
+                            </tfoot>
+
+                        </table>
+
+                            <div >
+                                <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
-                        </div>
-
-                    <div class="form-group {{ $errors->has('qty')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Qty:</label>
-
-                        <div class="col-sm-7">
-                            <input type="text" name="qty" class="form-control" value="{{ old('qty') ? old('qty') : $purchase->qty}}" placeholder="Enter product quantity">
-                            {!! $errors->has('qty')? '<p class="help-block"> '.$errors->first('qty').' </p>':'' !!}
-                        </div>
+                     </form>
                     </div>
-
-                    <div class="form-group {{ $errors->has('purchase_price')? 'has-error' : '' }}">
-                        <label class="control-label col-sm-3">Price:</label>
-
-                        <div class="col-sm-7">
-                            <input type="text" name="purchase_price" class="form-control" value="{{ old('purchase_price') ? ('purchase_price') :  $purchase->purchase_price }}" placeholder="Enter Unit Price">
-                            {!! $errors->has('purchase_price')? '<p class="help-block"> '.$errors->first('purchase_price').' </p>':'' !!}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-7 col-sm-offset-3">
-                            <button type="submit" name="submit" class="btn btn-primary" required="required"><i class="fa fa-plus-square-o"></i> Submit</button>
-                        </div>
-                    </div>
-
-                    </form>
-
-                </div><!-- /.box-body -->
-
-
-            </div><!-- /.box -->
-
-
-
-        </div> <!-- /.col -->
-    </div>
-    </div>
-    <!-- /.row -->
-
-
-</section><!-- /.content -->
-
+                </div>
+            </div>
+        </div>
 
 @endsection
+@push('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+     <script src="{{asset('/')}}js/multifield/jquery.multifield.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+
+
+            $('tbody').delegate('.productname', 'change', function () {
+
+                var  tr = $(this).parent().parent();
+                tr.find('.qty').focus();
+
+            })
+
+            $('tbody').delegate('.productname', 'change', function () {
+
+                var tr =$(this).parent().parent();
+                var id = tr.find('.productname').val();
+                var dataId = {'id':id};
+                $.ajax({
+                    type    : 'GET',
+                    url     :'{!! URL::route('findPrice') !!}',
+
+                    dataType: 'json',
+                    data: {"_token": $('meta[name="csrf-token"]').attr('content'), 'id':id},
+                    success:function (data) {
+                        tr.find('.price').val(data.sales_price);
+                    }
+                });
+            });
+
+
+            $('tbody').delegate('.qty,.price,.dis,.income_amount', 'keyup', function () {
+
+                var tr = $(this).parent().parent();
+                var qty = tr.find('.qty').val();
+                var price = tr.find('.price').val();
+                var dis = tr.find('.dis').val();
+                var income_amount = tr.find('.income_amount').val();
+                var amount = (dis * price) * (qty);
+                tr.find('.amount').val(amount);
+                total();
+                });
+                function total(){
+                var total = 0;
+                $('.amount').each(function (i,e) {
+                    var amount =$(this).val()-0;
+                    total += amount;
+                })
+                $('.total').html(total);
+                }
+
+                $('.addRow').on('click', function () {
+                addRow();
+
+                });
+
+                function addRow() {
+                var addRow = '<tr>\n' +
+                    '         <td><select name="product_name[]" class="form-control productname " >\n' +
+                    '         <option value="0" selected="true" disabled="true">Select Product</option>\n' +
+                '                                        @foreach($products as $product)\n' +
+                '                                            <option value="{{$product->id}}">{{$product->name}}</option>\n' +
+                '                                        @endforeach\n' +
+                    '               </select></td>\n' +
+                '                                <td><input type="text" name="qty[]" class="form-control qty" ></td>\n' +
+                '                                <td><input type="text" name="price[]" class="form-control price" ></td>\n' +
+                '                                <td><input type="text" name="dis[]" class="form-control dis" ></td>\n' +
+                '                                <td><input type="text" name="amount[]" class="form-control amount" ></td>\n' +
+                '                                <td><input type="text" step="any" min="0.01" id="income_amount" class="form-control income_amount" required="required" name="income_amount[]"></td>\n' +
+                '                                <td><a   class="btn btn-danger remove"> <i class="fa fa-remove"></i></a></td>\n' +
+                '                             </tr>';
+                $('tbody').append(addRow);
+                };
+
+
+                $('.remove').live('click', function () {
+                var l =$('tbody tr').length;
+                if(l==1){
+                    alert('you cant delete last one')
+                }else{
+
+                    $(this).parent().parent().remove();
+
+                }
+
+        });
+    });
+
+
+</script>
+
+@endpush
+

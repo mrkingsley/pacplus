@@ -14,7 +14,7 @@ class ProductImportController extends Controller
         $file = $request->file('file');
         Excel::import(new ProductImport, $file);
 
-        return redirect('product.index')->with('success', 'All good!');
+        return redirect('products')->with('success', 'All good!');
     }
 
 }

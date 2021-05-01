@@ -18,11 +18,10 @@ class ProductImport implements ToModel
         return new Product([
             'user_id' => Auth::id(),
             'name'  => $row[0],
-            'model'   => $row[1],
-            'category'  => $row[2],
-            'price'    => $row[3],
-            'sales_price'  => $row[4],
-            'qty' => $row[5],
+            'category'  => $row[1],
+            'price'    => $row[2],
+            'sales_price'  => $row[3],
+            'qty' => $row[4],
         ]);
     }
 }
