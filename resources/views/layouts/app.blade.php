@@ -37,7 +37,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #811;">
+        <nav class="navbar navbar-expand-md navbar-dark" style="background: rgb(5, 136, 243);>
             <div class="container-fluid">
 
                 <ul class="navbar-nav mr-auto">
@@ -81,7 +81,7 @@
 
 </body>
     <!-- Footer -->
-    <footer class="main-footer"  style="background: #811; ;padding:15px;color: #fff;;border-top: 1px solid #d2d6de;text-align: center;">
+    <footer class="main-footer"  style="background: rgb(5, 136, 243); ;padding:15px;color: #fff;;border-top: 1px solid #d2d6de;text-align: center;">
 
     <strong> &copy; {{ date('Y') }} </strong>
     </footer>

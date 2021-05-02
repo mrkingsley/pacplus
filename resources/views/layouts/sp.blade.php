@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/js/chosen.min.css') }}">
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
-    <link href="{{ asset('assets/css/dist/css/component-chosen.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('assets/css/dist/css/component-chosen.css') }}" rel="stylesheet"> --}}
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <!-- Site wrapper -->
@@ -33,7 +33,7 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
           <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" style="background-color: #811">
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" style="background: rgb(5, 136, 243);">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>

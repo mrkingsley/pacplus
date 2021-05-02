@@ -62,7 +62,7 @@
                                     <th>Product</th>
                                     <th>Quantity</th>
                                     <th>Saling price</th>
-                                    <th>purchasing price</th>
+                                    <th>Product Code</th>
                                     <th>Total price</th>
                                     <th>Gross Profit</th>
                                 </tr>
@@ -74,9 +74,9 @@
                                             <td>{{$item->product->name}}</td>
                                             <td>{{$item->qty}}</td>
                                             <td><span>&#8358;</span>{{$item->product->price}}</td>
-                                            <td><span>&#8358;</span>{{$item->product->sales_price}}</td>
+                                            <td><span>&#8358;</span>{{$item->product->sales_price * 78}}</td>
                                             <td><span>&#8358;</span>{{$item->product->price  * $item->qty}}</td>
-                                            <td><span>&#8358;</span>{{$item->product->price  * $item->qty - $item->product->sales_price * $item->qty}}</td>
+                                            <td><span>&#8358;</span>{{$item->product->price  * $item->qty - $item->product->sales_price * 78 * $item->qty}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

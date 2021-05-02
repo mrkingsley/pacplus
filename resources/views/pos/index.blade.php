@@ -33,7 +33,7 @@
                        <div class="col-sm-3">
                             <div class="card mb-3">
                                 <div class="view overlay">
-                                   
+
                                 </div>
                                 <form action="{{url('/transcation/addproduct', $product->id)}}" method="POST">
                                 @csrf
@@ -45,27 +45,27 @@
                                         <p class="card-text text-center">Qty: ({{$product->qty}})</p>
                                     <p class="card-text text-center text-success"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
                                     </p>
-                                    <button 
+                                    <button
                                         class="btn btn-danger btn-block btn-sm">out of stock <i
                                                 class="fas fa-cart-plus"></i></button>
-                                               
+
                                 </div>
 
                                 @elseif($product->qty == 6)
                                 <div class="card-body">
                                     <h2 class="card-text text-center font-weight-bold"
-                                        style="text-transform: capitalize;color:black"> 
+                                        style="text-transform: capitalize;color:black">
                                         {{ Str::words($product->name,4) }}</h2>
                                         <p class="card-text text-center">Qty: ({{$product->qty}})</p>
                                     <p class="card-text text-center text-success"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
                                     </p>
-                              
-                                     <button 
+
+                                     <button
                                         class="btn btn-success btn-block btn-sm">(runing out of stock)Add to Sell <i
                                                 class="fas fa-cart-plus"></i></button>
-                               
-                                
-                              </div>     
+
+
+                              </div>
                               @else
                                 <div class="card-body">
                                     <h2 class="card-text text-center font-weight-bold"
@@ -74,13 +74,13 @@
                                         <p class="card-text text-center">Qty: ({{$product->qty}})</p>
                                     <p class="card-text text-center text-success"><span>&#8358;</span>: {{ number_format($product->price,2,',','.') }}
                                     </p>
-                              
-                                     <button 
+
+                                     <button
                                         class="btn btn-primary btn-block btn-sm">Add to Sell <i
                                                 class="fas fa-cart-plus"></i></button>
-                               
-                                
-                              </div>         
+
+
+                              </div>
                                 @endif
                                 </form>
                             </div>
@@ -91,7 +91,7 @@
                 <div>{{ $products->links() }}</div>
             </div>
         </div>
-        
+
         <div class="col-sm-4">
             <div class="card" style="min-height:85vh">
                 <div class="card-header bg-white">
@@ -207,7 +207,7 @@
                             <a class="btn btn-primary btn-sm btn-block"
                                 style="padding:2px!important" href="{{url('/transcation/history')}}" target="_blank">History</a>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -258,7 +258,7 @@
                     <h3 class="font-weight-bold text-primary">Balance:</h3>
                     <h1 class="font-weight-bold text-primary" id="kembalian"></h1>
                 </div>
-                
+
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="saveButton" disabled onClick="openWindowReload(this)">Save transcation</button>
@@ -268,7 +268,7 @@
         </div>
     </div>
     @endsection
-    
+
     @push('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @if(Session::has('error'))
@@ -315,7 +315,7 @@
                 ',00';
 
             cek(bayar, jumlah);
-            const saveButton = document.getElementById("saveButton");   
+            const saveButton = document.getElementById("saveButton");
 
             if(jumlah === 0){
                 saveButton.disabled = true;
@@ -324,7 +324,7 @@
         };
 
         function cek(bayar, jumlah) {
-            const saveButton = document.getElementById("saveButton");   
+            const saveButton = document.getElementById("saveButton");
 
             if (bayar < jumlah) {
                 saveButton.disabled = true;
@@ -382,7 +382,7 @@
 
         /* Optional: show position indicator in red */
         ::-webkit-scrollbar-thumb {
-            background: #FF0000;
+            /* background: #FF0000; */
         }
 
         .cart-btn {
